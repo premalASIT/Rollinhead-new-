@@ -22,7 +22,7 @@ class _StartpageState extends State<Startpage> {
               Padding(
                 padding: const EdgeInsets.only(top:308.0),
                 child: new Image.asset("assests/images/rhead.png",
-                width: 280,
+                  width: 280,
                 ),
 //                child: Text("Rollinhead",
 //                style: GoogleFonts.pacifico(textStyle:
@@ -49,11 +49,11 @@ class _StartpageState extends State<Startpage> {
                       },
 
                       child: Text("Create New Account",
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.white,
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.white,
 //                        backgroundColor: Colors.black12,
-                      ),),
+                        ),),
                       shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(25.0),
                       ),
@@ -67,10 +67,10 @@ class _StartpageState extends State<Startpage> {
                 child: FlatButton(
 
                   child: Text("Log In",
-                  style: TextStyle(
-                    fontSize: 22.0,
-                    color: Colors.black45,
-                  ),),
+                    style: TextStyle(
+                      fontSize: 22.0,
+                      color: Colors.black45,
+                    ),),
                   onPressed: (){
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (BuildContext context) => Namepass()));
@@ -82,19 +82,19 @@ class _StartpageState extends State<Startpage> {
 
         ),
       ),
-        persistentFooterButtons: <Widget>[
-       Padding(
-      padding: const EdgeInsets.only(right:0140.0),
+      persistentFooterButtons: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(right:0140.0),
 
-        child: Text("Love from India",
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Colors.black38,
-          fontWeight: FontWeight.bold,
-        ),),
+          child: Text("Love from India",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black38,
+              fontWeight: FontWeight.bold,
+            ),),
 
-    ),
-    ],
+        ),
+      ],
     );
   }
 }

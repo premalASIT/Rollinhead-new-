@@ -55,15 +55,15 @@ class _NamepassState extends State<Namepass> {
         print("done");
 
 
-          Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (BuildContext context) => Homepage()),
-                  (Route<dynamic> route) => false);
-          
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (BuildContext context) => Homepage()),
+                (Route<dynamic> route) => false);
 
-          // Navigator.of(context).pushAndRemoveUntil(
-          //     MaterialPageRoute(builder: (BuildContext context) => Editprofile()),
-          //         (Route<dynamic> route) => false);
-          //
+
+        // Navigator.of(context).pushAndRemoveUntil(
+        //     MaterialPageRoute(builder: (BuildContext context) => Editprofile()),
+        //         (Route<dynamic> route) => false);
+        //
 
         Fluttertoast.showToast(
             msg: login.status.message,
@@ -118,72 +118,72 @@ class _NamepassState extends State<Namepass> {
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
           : Center(
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top: 78.0),
-                    child: Text(
-                      "NAME AND PASSWORD",
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top: 78.0),
+              child: Text(
+                "NAME AND PASSWORD",
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 48.0,
+                right: 48.0,
+                top: 30.0,
+                bottom: 10.0,
+              ),
+              child: TextField(
+                autocorrect: true,
+                controller: user,
+                decoration: InputDecoration(
+                  hintText: 'Email/Phone',
+                  hintStyle: TextStyle(color: Colors.grey),
+                  filled: true,
+                  fillColor: Colors.black12,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                    borderSide:
+                    BorderSide(color: Colors.black26, width: 2),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 48.0,
-                      right: 48.0,
-                      top: 30.0,
-                      bottom: 10.0,
-                    ),
-                    child: TextField(
-                      autocorrect: true,
-                      controller: user,
-                      decoration: InputDecoration(
-                        hintText: 'Email/Phone',
-                        hintStyle: TextStyle(color: Colors.grey),
-                        filled: true,
-                        fillColor: Colors.black12,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                          borderSide:
-                              BorderSide(color: Colors.black26, width: 2),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: Colors.black26),
-                        ),
-                      ),
-                    ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide: BorderSide(color: Colors.black26),
                   ),
+                ),
+              ),
+            ),
 
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 48.0,
-                      right: 48.0,
-                    ),
-                    child: TextField(
-                      controller: pass,
-                      obscureText: true,
-                      autocorrect: true,
-                      decoration: InputDecoration(
-                        hintText: 'Password',
-                        hintStyle: TextStyle(color: Colors.grey),
-                        filled: true,
-                        fillColor: Colors.black12,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                          borderSide:
-                              BorderSide(color: Colors.black26, width: 2),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: Colors.black26),
-                        ),
-                      ),
-                    ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 48.0,
+                right: 48.0,
+              ),
+              child: TextField(
+                controller: pass,
+                obscureText: true,
+                autocorrect: true,
+                decoration: InputDecoration(
+                  hintText: 'Password',
+                  hintStyle: TextStyle(color: Colors.grey),
+                  filled: true,
+                  fillColor: Colors.black12,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                    borderSide:
+                    BorderSide(color: Colors.black26, width: 2),
                   ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide: BorderSide(color: Colors.black26),
+                  ),
+                ),
+              ),
+            ),
 //          Padding(
 //            padding: const EdgeInsets.all(18.0),
 //            child: Row(
@@ -200,34 +200,34 @@ class _NamepassState extends State<Namepass> {
 //            ),
 //          ),
 
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      right: 48.0,
-                      left: 48.0,
-                      top: 20.0,
-                    ),
-                    child: FlatButton(
-                      child: Text(
-                        "Continue",
-                        style: TextStyle(
-                          fontSize: 22.0,
-                          color: Colors.deepOrange,
-                        ),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _isLoading = true;
-                        });
-                        loginpass(user.text, pass.text);
-                        // Sendotp(user.text);
+            Padding(
+              padding: const EdgeInsets.only(
+                right: 48.0,
+                left: 48.0,
+                top: 20.0,
+              ),
+              child: FlatButton(
+                child: Text(
+                  "Continue",
+                  style: TextStyle(
+                    fontSize: 22.0,
+                    color: Colors.deepOrange,
+                  ),
+                ),
+                onPressed: () {
+                  setState(() {
+                    _isLoading = true;
+                  });
+                  loginpass(user.text, pass.text);
+                  // Sendotp(user.text);
 //                Navigator.of(context).push(MaterialPageRoute(
 //                    builder: (BuildContext context) => Profilepic()));
-                      },
-                    ),
-                  ),
-                ],
+                },
               ),
             ),
+          ],
+        ),
+      ),
     );
   }
 }

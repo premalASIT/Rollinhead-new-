@@ -9,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:photofilters/filters/filters.dart';
 import 'package:photofilters/filters/preset_filters.dart';
 import 'package:rollinhead/Model/PostCreates/CreatePostApi.dart';
+import 'package:rollinhead/Model/SelectedNodeTree/SelectedNodeTreeApi.dart';
 import 'package:rollinhead/TreeConceptR/TreeCreaatePost.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
@@ -34,14 +36,68 @@ class _SelectNodeOptionState extends State<SelectNodeOption> {
   bool  _isLoading = false;
   String pathImages;
   Map imagefile;
+  SelectedNodeTreeApi selectedNodeTreeApi;
+
   // final String path = await getApplicationDocumentsDirectory().path;
 
+  generateTreeId(String nodeName,int selectedNode) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userid = prefs.getString('user_Id');
+
+    Map data = {
+      'UserId': userid,
+    };
+    var response = await http.post(
+        "http://rolinhead.dolphinfiresafety.com/registration/createBlankUserTree",
+        body: data);
+    selectedNodeTreeApi = new SelectedNodeTreeApi.fromJsonMap(json.decode(response.body.toString()));
+    if (response.statusCode == 200) {
+      if (selectedNodeTreeApi.status.code == 200) {
+        setState(() {
+          _isLoading = false;
+        });
+        Fluttertoast.showToast(
+            msg: selectedNodeTreeApi.status.message,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 2);
+
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) => TreeCreatePost(nodeName:nodeName,selectedNode: selectedNode,userTreeId: selectedNodeTreeApi.userTreeId,)));
+
+        print(response.body);
+      } else {
+        print("else");
+        setState(() {
+          _isLoading = false;
+        });
+        Fluttertoast.showToast(
+            msg: selectedNodeTreeApi.status.message,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 2);
+        print(response.body);
+      }
+    } else {
+      print("ELSE @");
+      setState(() {
+        _isLoading = false;
+      });
+      Fluttertoast.showToast(
+          msg: selectedNodeTreeApi.status.message,
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 2);
+      print(response.body);
+    }
+  }
 
   @override
   void initState() {
 
     super.initState();
   }
+
 
 
   @override
@@ -69,8 +125,12 @@ class _SelectNodeOptionState extends State<SelectNodeOption> {
                 child: RaisedButton(
                   color: Colors.red,
                   onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 1",selectedNode: 1,)));
+                    setState(() {
+                      _isLoading = true;
+                    });
+                    generateTreeId("Node 1",1);
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 1",selectedNode: 1,)));
                   },
                   child: Text("1 Node",
                     style: TextStyle(
@@ -87,8 +147,12 @@ class _SelectNodeOptionState extends State<SelectNodeOption> {
                 child: RaisedButton(
                   color: Colors.red,
                   onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 1",selectedNode: 2,)));
+                    setState(() {
+                      _isLoading = true;
+                    });
+                    generateTreeId("Node 1",2);
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 1",selectedNode: 2,)));
                   },
                   child: Text("2 Node",
                     style: TextStyle(
@@ -105,8 +169,12 @@ class _SelectNodeOptionState extends State<SelectNodeOption> {
                 child: RaisedButton(
                   color: Colors.red,
                   onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 1",selectedNode: 3,)));
+                    setState(() {
+                      _isLoading = true;
+                    });
+                    generateTreeId("Node 1",3);
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 1",selectedNode: 3,)));
                   },
                   child: Text("3 Node",
                     style: TextStyle(
@@ -123,8 +191,13 @@ class _SelectNodeOptionState extends State<SelectNodeOption> {
                 child: RaisedButton(
                   color: Colors.red,
                   onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 1",selectedNode: 4,)));
+                    setState(() {
+                      _isLoading = true;
+                    });
+                    generateTreeId("Node 1",4);
+
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 1",selectedNode: 4,)));
                   },
                   child: Text("4 Node",
                     style: TextStyle(
@@ -141,8 +214,13 @@ class _SelectNodeOptionState extends State<SelectNodeOption> {
                 child: RaisedButton(
                   color: Colors.red,
                   onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 1",selectedNode: 5,)));
+                    setState(() {
+                      _isLoading = true;
+                    });
+                    generateTreeId("Node 1",5);
+
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 1",selectedNode: 5,)));
                   },
                   child: Text("5 Node",
                     style: TextStyle(

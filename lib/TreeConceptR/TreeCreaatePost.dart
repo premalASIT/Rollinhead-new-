@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -16,21 +17,25 @@ import 'package:rollinhead/feedspage.dart';
 import 'package:rollinhead/homepage.dart';
 import 'package:rollinhead/image_editor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:async/async.dart';
+import 'package:path/path.dart' as path;
 
 
 
 class TreeCreatePost extends StatefulWidget {
   final String nodeName;
   final int selectedNode;
-  TreeCreatePost({this.nodeName,this.selectedNode});
+  final int userTreeId;
+  TreeCreatePost({this.nodeName,this.selectedNode,this.userTreeId});
   @override
-  _TreeCreatePostState createState() => _TreeCreatePostState(nodeName,selectedNode);
+  _TreeCreatePostState createState() => _TreeCreatePostState(nodeName,selectedNode,userTreeId);
 }
 
 class _TreeCreatePostState extends State<TreeCreatePost> {
   String nodeName;
   int selectedNode;
-  _TreeCreatePostState(this.nodeName,this.selectedNode);
+  int userTreeId;
+  _TreeCreatePostState(this.nodeName,this.selectedNode,this.userTreeId);
   File _imageFileOne;
   File _imageFileTwo;
   File _imageFileThree;
@@ -50,8 +55,49 @@ class _TreeCreatePostState extends State<TreeCreatePost> {
   List images;
   int maxImageNo = 10;
   bool selectSingleImage = false;
+  List<File> listImage =new List<File>();
   // final String path = await getApplicationDocumentsDirectory().path;
 
+  //
+  // Future uploadmultipleimage(List images) async {
+  //   var uri = Uri.parse("");
+  //   http.MultipartRequest request = new http.MultipartRequest('POST', uri);
+  //   request.headers[''] = '';
+  //   request.fields['user_id'] = '10';
+  //   request.fields['post_details'] = 'dfsfdsfsd';
+  //   //multipartFile = new http.MultipartFile("imagefile", stream, length, filename: basename(imageFile.path));
+  //  List<MultipartFile> newList = new List<MultipartFile>();
+  //   for (int i = 0; i < images.length; i++) {
+  //     File imageFile = File(images[i].toString());
+  //     var stream =
+  //     new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+  //     var length = await imageFile.length();
+  //     var newList = new http.MultipartFile("imagefile", stream, length,
+  //         filename: path.basename(imageFile.path));
+  //    // newList.add(multipartFile);
+  //   }
+  //   // var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+  //   //
+  //   // var length = await images.length;
+  //   //
+  //   // var multipartFile = new http.MultipartFile('file', stream, length,
+  //   //     filename: path.basename(images.path),
+  //   //     contentType: new MediaType('image', 'png'));
+  //
+  //   // add multipart form to request
+  //   request.files.add(newList);
+  //
+  //  // request.files.addAll(newList);
+  //   var response = await request.send();
+  //   if (response.statusCode == 200) {
+  //     print("Image Uploaded");
+  //   } else {
+  //     print("Upload Failed");
+  //   }
+  //   response.stream.transform(utf8.decoder).listen((value) {
+  //     print(value);
+  //   });
+  // }
 
   @override
   void initState() {
@@ -69,6 +115,7 @@ class _TreeCreatePostState extends State<TreeCreatePost> {
       _imageFileOne = image;
       flag=1;
     });
+    uploadImageMedia(_imageFileOne);
   }
 
   Future _getImageTwo() async {
@@ -77,6 +124,7 @@ class _TreeCreatePostState extends State<TreeCreatePost> {
       _imageFileTwo = image;
       flag=1;
     });
+    uploadImageMedia(_imageFileTwo);
   }
 
   Future _getImageThree() async {
@@ -85,6 +133,7 @@ class _TreeCreatePostState extends State<TreeCreatePost> {
       _imageFileThree = image;
       flag=1;
     });
+    uploadImageMedia(_imageFileThree);
   }
 
   Future _getImageFour() async {
@@ -93,6 +142,7 @@ class _TreeCreatePostState extends State<TreeCreatePost> {
       _imageFileFour = image;
       flag=1;
     });
+    uploadImageMedia(_imageFileFour);
   }
 
   Future _getImageFive() async {
@@ -101,6 +151,7 @@ class _TreeCreatePostState extends State<TreeCreatePost> {
       _imageFileFive = image;
       flag=1;
     });
+    uploadImageMedia(_imageFileFive);
   }
 
   // initMultiPickUp() async {
@@ -256,51 +307,196 @@ class _TreeCreatePostState extends State<TreeCreatePost> {
   //   }
   // }
   CreatePostApi changepro;
-  Future uploadImageMedia(File fileImage1,File fileImage2,File fileImage3,File fileImage4,File fileImage5) async {
+
+    generateTreeNodeId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    final mimeTypeData1 = lookupMimeType(fileImage1.path, headerBytes: [0xFF, 0xD8]).split('/');
-    final mimeTypeData2 = lookupMimeType(fileImage2.path, headerBytes: [0xFF, 0xD8]).split('/');
-    final mimeTypeData3 = lookupMimeType(fileImage3.path, headerBytes: [0xFF, 0xD8]).split('/');
-    final mimeTypeData4 = lookupMimeType(fileImage4.path, headerBytes: [0xFF, 0xD8]).split('/');
-    final mimeTypeData5 = lookupMimeType(fileImage5.path, headerBytes: [0xFF, 0xD8]).split('/');
+    Map data = {
+      'UserTreeId': '$userTreeId',
+      'NodeNumber': '$selectedNode',
+      'NodeName': loc.text,
+    };
+    var response = await http.post(
+        "http://rolinhead.dolphinfiresafety.com/registration/createTreeNode",
+        body: data);
+    if (response.statusCode == 200) {
+      setState(() {
+        _isLoading = false;
+      });
+      if(selectedNode==1){
+        if(nodeName=="Node 1"){
+          // setState(() {
+          //   _isLoading=true;
+          // });
+          // generateTreeNodeId("Node 1",1);
+          Fluttertoast.showToast(
+              msg: "Success",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 2
+          );
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Homepage()),
+                  (Route<dynamic> route) => false);
+        }
+      }else if(selectedNode==2){
+        if(nodeName=="Node 1"){
+          // setState(() {
+          //   _isLoading=true;
+          // });
+          // generateTreeNodeId("Node 2",2);
+          Navigator.of(context).pop();
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 2",selectedNode: 2,userTreeId: userTreeId,)));
+        }else if(nodeName=="Node 2"){
+          Fluttertoast.showToast(
+              msg: "Success",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 2
+          );
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Homepage()),
+                  (Route<dynamic> route) => false);
+        }
+      }else if(selectedNode==3){
+        if(nodeName=="Node 1"){
+          Navigator.of(context).pop();
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 2",selectedNode: 3,userTreeId: userTreeId,)));
+        }else if(nodeName=="Node 2"){
+          Navigator.of(context).pop();
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 3",selectedNode: 3,userTreeId: userTreeId,)));
+        }else if(nodeName=="Node 3"){
+          Fluttertoast.showToast(
+              msg: "Success",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 2
+          );
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Homepage()),
+                  (Route<dynamic> route) => false);
+        }
+      }else if(selectedNode==4){
+        if(nodeName=="Node 1"){
+          Navigator.of(context).pop();
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 2",selectedNode: 4,userTreeId: userTreeId,)));
+        }else if(nodeName=="Node 2"){
+          Navigator.of(context).pop();
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 3",selectedNode: 4,userTreeId: userTreeId,)));
+        }else if(nodeName=="Node 3"){
+          Navigator.of(context).pop();
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 4",selectedNode: 4,userTreeId: userTreeId,)));
+        }else if(nodeName=="Node 4"){
+          Fluttertoast.showToast(
+              msg: "Success",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 2
+          );
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Homepage()),
+                  (Route<dynamic> route) => false);
+        }
+      }else if(selectedNode==5){
+        if(nodeName=="Node 1"){
+          Navigator.of(context).pop();
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 2",selectedNode: 5,userTreeId: userTreeId,)));
+        }else if(nodeName=="Node 2"){
+          Navigator.of(context).pop();
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 3",selectedNode: 5,userTreeId: userTreeId,)));
+        }else if(nodeName=="Node 3"){
+          Navigator.of(context).pop();
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 4",selectedNode: 5,userTreeId: userTreeId,)));
+        }else if(nodeName=="Node 4"){
+          Navigator.of(context).pop();
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 5",selectedNode: 5,userTreeId: userTreeId,)));
+        }else if(nodeName=="Node 5"){
+          Fluttertoast.showToast(
+              msg: "Success",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 2
+          );
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Homepage()),
+                  (Route<dynamic> route) => false);
+        }
+      }
+      // Fluttertoast.showToast(
+      //     msg: "Tree node created successfully.",
+      //     toastLength: Toast.LENGTH_LONG,
+      //     gravity: ToastGravity.BOTTOM,
+      //     timeInSecForIosWeb: 2);
+      // Navigator.of(context).pop();
+      // Navigator.of(context).push(MaterialPageRoute(
+      //     builder: (BuildContext context) => TreeCreatePost(nodeName:nodeName,selectedNode: selectedNode,userTreeId: userTreeId,)));
+    } else {
+      print("ELSE @");
+      setState(() {
+        _isLoading = false;
+      });
+      Fluttertoast.showToast(
+          msg: "Error",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 2);
+      print(response.body);
+    }
+  }
+
+
+  Future uploadImageMedia(File fileImage1) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final mimeTypeData1 = lookupMimeType(listImage.join(","), headerBytes: [0xFF, 0xD8]).split('/');
+    // final mimeTypeData2 = lookupMimeType(fileImage2.path, headerBytes: [0xFF, 0xD8]).split('/');
+    // final mimeTypeData3 = lookupMimeType(fileImage3.path, headerBytes: [0xFF, 0xD8]).split('/');
+    // final mimeTypeData4 = lookupMimeType(fileImage4.path, headerBytes: [0xFF, 0xD8]).split('/');
+    // final mimeTypeData5 = lookupMimeType(fileImage5.path, headerBytes: [0xFF, 0xD8]).split('/');
     final imageUploadRequest =
-    http.MultipartRequest('POST', Uri.parse("http://rolinhead.dolphinfiresafety.com/registration/createPost"));
-    final file1 = await http.MultipartFile.fromPath('imagefile', fileImage1.path,
+    http.MultipartRequest('POST', Uri.parse("https://rolinhead.dolphinfiresafety.com/registration/createTreeNodeImage"));
+    final file1 = await http.MultipartFile.fromPath('NodeImage', fileImage1.path,
         contentType: MediaType(mimeTypeData1[0], mimeTypeData1[1]));
-    final file2 = await http.MultipartFile.fromPath('imagefile', fileImage2.path,
-        contentType: MediaType(mimeTypeData2[0], mimeTypeData2[1]));
-    final file3 = await http.MultipartFile.fromPath('imagefile', fileImage3.path,
-        contentType: MediaType(mimeTypeData3[0], mimeTypeData3[1]));
-    final file4 = await http.MultipartFile.fromPath('imagefile', fileImage4.path,
-        contentType: MediaType(mimeTypeData4[0], mimeTypeData4[1]));
-    final file5 = await http.MultipartFile.fromPath('imagefile', fileImage5.path,
-        contentType: MediaType(mimeTypeData5[0], mimeTypeData5[1]));
+    // final file2 = await http.MultipartFile.fromPath('imagefile', fileImage2.path,
+    //     contentType: MediaType(mimeTypeData2[0], mimeTypeData2[1]));
+    // final file3 = await http.MultipartFile.fromPath('imagefile', fileImage3.path,
+    //     contentType: MediaType(mimeTypeData3[0], mimeTypeData3[1]));
+    // final file4 = await http.MultipartFile.fromPath('imagefile', fileImage4.path,
+    //     contentType: MediaType(mimeTypeData4[0], mimeTypeData4[1]));
+    // final file5 = await http.MultipartFile.fromPath('imagefile', fileImage5.path,
+    //     contentType: MediaType(mimeTypeData5[0], mimeTypeData5[1]));
 
     prefs.setString("imgpath", pathImages);
-    imageUploadRequest.fields['userId']= prefs.getString('user_Id') ;
-    imageUploadRequest.fields['location']= loc.text;
+    imageUploadRequest.fields['UserTreeId']= prefs.getString('user_Id') ;
+   // imageUploadRequest.fields['NodeName']= loc.text;
+    imageUploadRequest.fields['NodeNumber']= '$selectedNode';
 
     imageUploadRequest.files.add(file1);
-    imageUploadRequest.files.add(file2);
-    imageUploadRequest.files.add(file3);
-    imageUploadRequest.files.add(file4);
-    imageUploadRequest.files.add(file5);
+    // imageUploadRequest.files.add(file2);
+    // imageUploadRequest.files.add(file3);
+    // imageUploadRequest.files.add(file4);
+    // imageUploadRequest.files.add(file5);
     try {
-      _isLoading = true;
+       _isLoading = true;
 
       final streamedResponse = await imageUploadRequest.send();
 
       streamedResponse.stream.transform(utf8.decoder).listen((value) {
+        setState(() {
+          _isLoading = false;
+        });
+
         Fluttertoast.showToast(
-            msg:"Successfully post",
+            msg:"Successfully",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 2
         );
-        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-            builder: (BuildContext context) => Homepage()), (
-            Route<dynamic> route) => false);
         print(value);
         return Future.value(value);
       });
@@ -309,46 +505,46 @@ class _TreeCreatePostState extends State<TreeCreatePost> {
     }
   }
 
-  Future uploadVideoMedia(File fileVideo,String Msg,Loc) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final mimeTypeData =
-    lookupMimeType(fileVideo.path, headerBytes: [0xFF, 0xD8]).split('/');
-    final imageUploadRequest =
-    http.MultipartRequest('POST', Uri.parse("http://rolinhead.dolphinfiresafety.com/registration/createPost"));
-
-    final vfile = await http.MultipartFile.fromPath('videofile', fileVideo.path,
-        contentType: MediaType(mimeTypeData[0], mimeTypeData[1]));
-
-    imageUploadRequest.fields['userId']= prefs.getString('user_Id') ;
-    imageUploadRequest.fields['content']= Msg;
-    imageUploadRequest.fields['location']= Loc;
-
-    imageUploadRequest.files.add(vfile);
-    try {
-      _isLoading = false;
-
-      final streamedResponse = await imageUploadRequest.send();
-
-      streamedResponse.stream.transform(utf8.decoder).listen((value) {
-        Fluttertoast.showToast(
-            msg:"Successfully post",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 2
-        );
-        // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-        //     builder: (BuildContext context) => FeedPage()), (
-        //     Route<dynamic> route) => false);
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => FeedPage()
-        ));
-        print(value);
-        return Future.value(value);
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
+  // Future uploadVideoMedia(File fileVideo,String Msg,Loc) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   final mimeTypeData =
+  //   lookupMimeType(fileVideo.path, headerBytes: [0xFF, 0xD8]).split('/');
+  //   final imageUploadRequest =
+  //   http.MultipartRequest('POST', Uri.parse("http://rolinhead.dolphinfiresafety.com/registration/createPost"));
+  //
+  //   final vfile = await http.MultipartFile.fromPath('videofile', fileVideo.path,
+  //       contentType: MediaType(mimeTypeData[0], mimeTypeData[1]));
+  //
+  //   imageUploadRequest.fields['userId']= prefs.getString('user_Id') ;
+  //   imageUploadRequest.fields['content']= Msg;
+  //   imageUploadRequest.fields['location']= Loc;
+  //
+  //   imageUploadRequest.files.add(vfile);
+  //   try {
+  //     _isLoading = false;
+  //
+  //     final streamedResponse = await imageUploadRequest.send();
+  //
+  //     streamedResponse.stream.transform(utf8.decoder).listen((value) {
+  //       Fluttertoast.showToast(
+  //           msg:"Successfully post",
+  //           toastLength: Toast.LENGTH_LONG,
+  //           gravity: ToastGravity.BOTTOM,
+  //           timeInSecForIosWeb: 2
+  //       );
+  //       // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+  //       //     builder: (BuildContext context) => FeedPage()), (
+  //       //     Route<dynamic> route) => false);
+  //       Navigator.of(context).push(MaterialPageRoute(
+  //           builder: (BuildContext context) => FeedPage()
+  //       ));
+  //       print(value);
+  //       return Future.value(value);
+  //     });
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
   Future _pickVideo() async {
     // Navigator.of(context).pop();
     // final video = await ImagePicker.pickVideo(source: ImageSource.gallery);
@@ -557,8 +753,8 @@ class _TreeCreatePostState extends State<TreeCreatePost> {
                     fontSize: 22,
                   ),),
                 onPressed: () async {
-                  if(_imageFileOne==null || _imageFileTwo==null ||
-                      _imageFileThree==null || _imageFileFour==null || _imageFileFive==null || loc.text==""){
+                  if(_imageFileOne==null && _imageFileTwo==null &&
+                      _imageFileThree==null && _imageFileFour==null && _imageFileFive==null || loc.text==""){
                     Fluttertoast.showToast(
                         msg: "Please Fill All Images & Name Text",
                         toastLength: Toast.LENGTH_LONG,
@@ -566,93 +762,10 @@ class _TreeCreatePostState extends State<TreeCreatePost> {
                         timeInSecForIosWeb: 2
                     );
                   }else{
-                    if(selectedNode==1){
-                      if(nodeName=="Node 1"){
-                        Fluttertoast.showToast(
-                            msg: "Success",
-                            toastLength: Toast.LENGTH_LONG,
-                            gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 2
-                        );
-                      }
-                    }else if(selectedNode==2){
-                      if(nodeName=="Node 1"){
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 2",selectedNode: 2,)));
-                      }else if(nodeName=="Node 2"){
-                        Fluttertoast.showToast(
-                            msg: "Success",
-                            toastLength: Toast.LENGTH_LONG,
-                            gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 2
-                        );
-                      }
-                    }else if(selectedNode==3){
-                      if(nodeName=="Node 1"){
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 2",selectedNode: 3,)));
-                      }else if(nodeName=="Node 2"){
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 3",selectedNode: 3,)));
-                      }else if(nodeName=="Node 3"){
-                        Fluttertoast.showToast(
-                            msg: "Success",
-                            toastLength: Toast.LENGTH_LONG,
-                            gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 2
-                        );
-                      }
-                    }else if(selectedNode==4){
-                      if(nodeName=="Node 1"){
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 2",selectedNode: 4,)));
-                      }else if(nodeName=="Node 2"){
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 3",selectedNode: 4,)));
-                      }else if(nodeName=="Node 3"){
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 4",selectedNode: 4,)));
-                      }else if(nodeName=="Node 4"){
-                        Fluttertoast.showToast(
-                            msg: "Success",
-                            toastLength: Toast.LENGTH_LONG,
-                            gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 2
-                        );
-                      }
-                    }else if(selectedNode==5){
-                      if(nodeName=="Node 1"){
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 2",selectedNode: 5,)));
-                      }else if(nodeName=="Node 2"){
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 3",selectedNode: 5,)));
-                      }else if(nodeName=="Node 3"){
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 4",selectedNode: 5,)));
-                      }else if(nodeName=="Node 4"){
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 5",selectedNode: 5,)));
-                      }else if(nodeName=="Node 5"){
-                        Fluttertoast.showToast(
-                            msg: "Success",
-                            toastLength: Toast.LENGTH_LONG,
-                            gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 2
-                        );
-                      }
-                    }
-
+                    setState(() {
+                      _isLoading=true;
+                    });
+                    generateTreeNodeId();
                   }
 
 
