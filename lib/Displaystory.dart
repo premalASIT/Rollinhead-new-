@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rollinhead/TreeConceptR/SelectNodeOption.dart';
 import 'package:rollinhead/UploadingStory.dart';
 import 'package:rollinhead/homepage.dart';
 import 'package:rollinhead/listchats.dart';
 import 'package:rollinhead/stories.dart';
-import 'package:rollinhead/treeconcept.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:story_view/story_view.dart';
 import 'package:rollinhead/Model/storyuploaderlist/StoryuploadersApi.dart';
@@ -55,13 +55,31 @@ class _displaystoryState extends State<displaystory> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Story'),
-        leading: BackButton(
-          onPressed: (){
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => Homepage()));
-          },
-        ),
+        // leading: BackButton(
+        //   onPressed: (){
+        //     Navigator.of(context).push(MaterialPageRoute(
+        //         builder: (BuildContext context) => Homepage()));
+        //   },
+        // ),
         actions: <Widget>[
+          IconButton(
+            icon: new Image.asset(
+              'assests/images/t_tree.png',
+              height: 400,
+              width: 400,
+            ),
+            tooltip: 'Diary',
+            onPressed: () => {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => SelectNodeOption())),
+              // Navigator.of(context).push(MaterialPageRoute(
+              //     builder: (BuildContext context) => TreeConcept())),
+              // Navigator.of(context).push(MaterialPageRoute(
+              //     builder: (BuildContext context) => ChatsLists())),
+//                    builder: (BuildContext context) => ImageEditorPro())),
+              // builder: (BuildContext context) => ChatsLists())),
+            },
+          ),
           IconButton(
             icon: new Image.asset(
               'assests/images/m.png',
@@ -156,7 +174,7 @@ class _displaystoryState extends State<displaystory> {
                             ),
                           ),
 
-                          SizedBox(height: 10,),
+                          SizedBox(height: 5,),
                           Text(
                             story.response[index].firstName != null ?
                             story.response[index].firstName :
