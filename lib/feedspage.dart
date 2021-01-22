@@ -98,7 +98,7 @@ class _FeedPageState extends State<FeedPage> {
         "http://rolinhead.dolphinfiresafety.com/registration/dislikePost",
         body: data);
     dislikesapi =
-        new DisLikesPost.fromJsonMap(json.decode(response.body.toString()));
+    new DisLikesPost.fromJsonMap(json.decode(response.body.toString()));
     if (response.statusCode == 200) {
       if (dislikesapi.status.code == 200) {
         setState(() {
@@ -148,7 +148,7 @@ class _FeedPageState extends State<FeedPage> {
         'http://rolinhead.dolphinfiresafety.com/registration/userHomePosts',
         body: data);
     viewprofile =
-        new UserFeedApi.fromJsonMap(json.decode(response.body.toString()));
+    new UserFeedApi.fromJsonMap(json.decode(response.body.toString()));
 
     if (response.statusCode == 200) {
       setState(() {
@@ -178,7 +178,7 @@ class _FeedPageState extends State<FeedPage> {
         "http://rolinhead.dolphinfiresafety.com/registration/sharePostAsStory",
         body: data);
     story =
-        new StoryAsPostApi.fromJsonMap(json.decode(response.body.toString()));
+    new StoryAsPostApi.fromJsonMap(json.decode(response.body.toString()));
     if (response.statusCode == 200) {
       if (story.status.code == 200) {
         setState(() {
@@ -220,7 +220,7 @@ class _FeedPageState extends State<FeedPage> {
       'http://rolinhead.dolphinfiresafety.com/registration/getUserProfile?userId=$userid & friendId=$userid',
     );
     profile =
-        new UserProfileApi.fromJsonMap(json.decode(response.body.toString()));
+    new UserProfileApi.fromJsonMap(json.decode(response.body.toString()));
 
     if (response.statusCode == 200) {
       if (response != null) {
@@ -306,9 +306,9 @@ class _FeedPageState extends State<FeedPage> {
             itemBuilder: (context, index) {
               return ListTile(
                 title:
-                  viewprofile.response[inx].mentionUserIds[index].userName != null ?
-                    Text(viewprofile.response[inx].mentionUserIds[index].userName):
-                  Text(viewprofile.response[inx].mentionUserIds[index].firstName),
+                viewprofile.response[inx].mentionUserIds[index].userName != null ?
+                Text(viewprofile.response[inx].mentionUserIds[index].userName):
+                Text(viewprofile.response[inx].mentionUserIds[index].firstName),
                 onTap: (){
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (BuildContext context) =>
@@ -403,334 +403,334 @@ class _FeedPageState extends State<FeedPage> {
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
           : viewprofile.response.length > 0
-              ? SwipeDetector(
+          ? SwipeDetector(
 
-                child: ListView.builder(
-                    itemCount: viewprofile.response.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10.0, top: 14),
-                            child: InkWell(
-                              onTap: (){
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        Userprofile(uid :viewprofile.response[index].userId.toString())));
-                              },
-                              child: Row(
-                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(160),
-                                    child: viewprofile.response[index]
-                                                .userProfilePicture !=
-                                            null
-                                        ? Image.network(
-                                            viewprofile
-                                                .response[index].userProfilePicture,
-                                            height: 45,
-                                            width: 45,
-                                          )
-                                        : Image.asset(
-                                            "assests/images/1.jpg",
-                                            height: 45,
-                                            width: 45,
-                                          ),
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Column(
-                                mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      viewprofile.response[index].userName != null
-                                          ? Text(
-                                              viewprofile.response[index].userName,
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            )
-                                          : Text(
-                                              "UserName",
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                      viewprofile.response[index].location != ""
-                                          ? Text(
-                                              viewprofile.response[index].location,
-
-                                              style: TextStyle(
-                                                fontSize: 14.5,
-                                                color: Colors.black54,
-                                              ),
-                                            )
-                                          : Text(
-                                              "Location",
-                                              style: TextStyle(
-                                                fontSize: 14.5,
-                                                color: Colors.black54,
-                                              ),
-                                            ),
-                                    ],
-                                  ),
-                                   SizedBox(width:117),
-                                   FlatButton.icon(onPressed: null, icon: Icon(Icons.info,color: Colors.red, size: 35,  ),
-                                       label:  Text("",style: TextStyle(fontSize: 0),)),
-                                ],
+        child: ListView.builder(
+          itemCount: viewprofile.response.length,
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0, top: 14),
+                  child: InkWell(
+                    onTap: (){
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              Userprofile(uid :viewprofile.response[index].userId.toString())));
+                    },
+                    child: Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(160),
+                          child: viewprofile.response[index]
+                              .userProfilePicture !=
+                              null
+                              ? Image.network(
+                            viewprofile
+                                .response[index].userProfilePicture,
+                            height: 45,
+                            width: 45,
+                          )
+                              : Image.asset(
+                            "assests/images/1.jpg",
+                            height: 45,
+                            width: 45,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Column(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceEvenly,
+                          children: [
+                            viewprofile.response[index].userName != null
+                                ? Text(
+                              viewprofile.response[index].userName,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                                : Text(
+                              "UserName",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ),
-                          viewprofile.response[index].imagePath != ""
-                              ? Padding(
-                                  padding: const EdgeInsets.only(top: 12.0),
-                                  child: Image.network(
-                                    viewprofile.response[index].imagePath,
-                                    height: 380,
-                                    width: 380,
-                                  ),
-                                )
-                              : viewprofile.response[index].videoPath != ""
-                                  ? Padding(
-                                      padding: const EdgeInsets.only(top: 12.0),
-                                      child: ChewieListItem(
-                                        videoPlayerController:
-                                            VideoPlayerController.network(
-                                          viewprofile.response[index].videoPath,
-                                          // 'https://rolinhead.dolphinfiresafety.com/assets/userPostFiles/1028202084714post136.mp4',
-                                        ),
-                                        looping: false,
-                                      ),
-                                    )
-                                  : Padding(
-                                      padding: const EdgeInsets.only(top: 12.0),
-                                      child: Image.asset(
-                                        "assests/images/1.jpg",
-                                        height: 380,
-                                        width: 380,
-                                      ),
-                                    ),
-                          viewprofile.response[index].personalityType == "Extrovert" ?
-                          Column(
-                            children: <Widget>[
+                            viewprofile.response[index].location != ""
+                                ? Text(
+                              viewprofile.response[index].location,
+
+                              style: TextStyle(
+                                fontSize: 14.5,
+                                color: Colors.black54,
+                              ),
+                            )
+                                : Text(
+                              "Location",
+                              style: TextStyle(
+                                fontSize: 14.5,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(width:117),
+                        FlatButton.icon(onPressed: null, icon: Icon(Icons.info,color: Colors.red, size: 35,  ),
+                            label:  Text("",style: TextStyle(fontSize: 0),)),
+                      ],
+                    ),
+                  ),
+                ),
+                viewprofile.response[index].imagePath != ""
+                    ? Padding(
+                  padding: const EdgeInsets.only(top: 12.0),
+                  child: Image.network(
+                    viewprofile.response[index].imagePath,
+                    height: 380,
+                    width: 380,
+                  ),
+                )
+                    : viewprofile.response[index].videoPath != ""
+                    ? Padding(
+                  padding: const EdgeInsets.only(top: 12.0),
+                  child: ChewieListItem(
+                    videoPlayerController:
+                    VideoPlayerController.network(
+                      viewprofile.response[index].videoPath,
+                      // 'https://rolinhead.dolphinfiresafety.com/assets/userPostFiles/1028202084714post136.mp4',
+                    ),
+                    looping: false,
+                  ),
+                )
+                    : Padding(
+                  padding: const EdgeInsets.only(top: 12.0),
+                  child: Image.asset(
+                    "assests/images/1.jpg",
+                    height: 380,
+                    width: 380,
+                  ),
+                ),
+                viewprofile.response[index].personalityType == "Extrovert" ?
+                Column(
+                  children: <Widget>[
 //                            Text(viewprofile.response[index].content,
 //                            style: TextStyle(
 //                              fontSize: 19,
 //                            ),),
 
-                           Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  InkWell(
-                                    splashColor: Colors.orange,
-                                    onTap: () {
-                                      setState(() {
-                                        if (viewprofile.response[index].isLikedByMe ==
-                                            false) {
-                                          Likes(
-                                              viewprofile.response[index].userPostId);
-                                        } else if (viewprofile
-                                                .response[index].isLikedByMe ==
-                                            true) {
-                                          DisLikes(
-                                              viewprofile.response[index].userPostId);
-                                        }
-                                      });
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: 8.0, top: 8.0),
-                                          child: Image.asset(
-                                            "assests/images/star.png",
-                                            height: 50,
-                                            width: 50,
-                                          ),
-                                        ),
-
-                                        Text(
-                                            viewprofile.response[index].likes
-                                            .toString()),
-                                      ],
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.of(context).push(MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              CommentsPage(
-                                                  pid: viewprofile
-                                                      .response[index].userPostId)));
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: 8.0, top: 8.0),
-                                          child: Image.asset(
-                                            "assests/images/circle.png",
-                                            height: 50,
-                                            width: 50,
-                                          ),
-                                        ),
-                                        Text(viewprofile.response[index].comments
-                                            .toString()),
-                                      ],
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              title: Text('Post as Story'),
-                                              content: post(viewprofile
-                                                  .response[index].userPostId),
-                                            );
-                                          });
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          bottom: 8.0, top: 8.0),
-                                      child: Image.asset("assests/images/play.png",
-                                          height: 50, width: 50),
-                                    ),
-                                  ),
-                                ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        InkWell(
+                          splashColor: Colors.orange,
+                          onTap: () {
+                            setState(() {
+                              if (viewprofile.response[index].isLikedByMe ==
+                                  false) {
+                                Likes(
+                                    viewprofile.response[index].userPostId);
+                              } else if (viewprofile
+                                  .response[index].isLikedByMe ==
+                                  true) {
+                                DisLikes(
+                                    viewprofile.response[index].userPostId);
+                              }
+                            });
+                          },
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    bottom: 8.0, top: 8.0),
+                                child: Image.asset(
+                                  "assests/images/star.png",
+                                  height: 50,
+                                  width: 50,
+                                ),
                               ),
-                            ],
-                          ):
-                          Column(
-                            children: <Widget>[
 
-
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  InkWell(
-                                    splashColor: Colors.orange,
-                                    onTap: () {
-                                      setState(() {
-                                        if (viewprofile.response[index].isLikedByMe ==
-                                            false) {
-                                          Likes(
-                                              viewprofile.response[index].userPostId);
-                                        } else if (viewprofile
-                                            .response[index].isLikedByMe ==
-                                            true) {
-                                          DisLikes(
-                                              viewprofile.response[index].userPostId);
-                                        }
-                                      });
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: 8.0, top: 8.0),
-                                          child: Image.asset(
-                                            "assests/images/star.png",
-                                            height: 50,
-                                            width: 50,
-                                          ),
-                                        ),
-                                        // Text(viewprofile.response[index].likes
-                                        //     .toString()),
-                                      ],
-                                    ),
-                                  ),
-
-                                ],
-                              ),
+                              Text(
+                                  viewprofile.response[index].likes
+                                      .toString()),
                             ],
                           ),
-                          // FlatButton.icon(onPressed: null, icon: Icon(Icons.star,color: Colors.amber,),
-                          //     label: Text("",style: TextStyle(fontSize: 0),)),
-                          Column(
-                            children: <Widget>[
-                              Text(viewprofile.response[index].content,
-                                style: TextStyle(
-                                  fontSize: 19,
-                                ),),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                              viewprofile.response[index].personalityType == "Extrovert"  ? InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (BuildContext context) => CommentsPage(
-                                          pid: viewprofile.response[index].userPostId)));
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'View all Comments',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    CommentsPage(
+                                        pid: viewprofile
+                                            .response[index].userPostId)));
+                          },
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    bottom: 8.0, top: 8.0),
+                                child: Image.asset(
+                                  "assests/images/circle.png",
+                                  height: 50,
+                                  width: 50,
                                 ),
-                              ): Container(),
-                              viewprofile.response[index].mentionUserIds.length > 0 ?
-                              InkWell(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title: Text('Mentions'),
-                                          content: gettag(index),
-                                        );
-                                      }
+                              ),
+                              Text(viewprofile.response[index].comments
+                                  .toString()),
+                            ],
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Post as Story'),
+                                    content: post(viewprofile
+                                        .response[index].userPostId),
                                   );
-                                  // Navigator.of(context).push(MaterialPageRoute(
-                                  //     builder: (BuildContext context) =>
-                                  //         Userprofile(uid :viewprofile.response[index].userId.toString())));
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'Mentions',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                bottom: 8.0, top: 8.0),
+                            child: Image.asset("assests/images/play.png",
+                                height: 50, width: 50),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ):
+                Column(
+                  children: <Widget>[
+
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        InkWell(
+                          splashColor: Colors.orange,
+                          onTap: () {
+                            setState(() {
+                              if (viewprofile.response[index].isLikedByMe ==
+                                  false) {
+                                Likes(
+                                    viewprofile.response[index].userPostId);
+                              } else if (viewprofile
+                                  .response[index].isLikedByMe ==
+                                  true) {
+                                DisLikes(
+                                    viewprofile.response[index].userPostId);
+                              }
+                            });
+                          },
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    bottom: 8.0, top: 8.0),
+                                child: Image.asset(
+                                  "assests/images/star.png",
+                                  height: 50,
+                                  width: 50,
                                 ),
-                              ): Container(),
-                                ],
                               ),
+                              // Text(viewprofile.response[index].likes
+                              //     .toString()),
                             ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 15.0),
+                        ),
+
+                      ],
+                    ),
+                  ],
+                ),
+                // FlatButton.icon(onPressed: null, icon: Icon(Icons.star,color: Colors.amber,),
+                //     label: Text("",style: TextStyle(fontSize: 0),)),
+                Column(
+                  children: <Widget>[
+                    Text(viewprofile.response[index].content,
+                      style: TextStyle(
+                        fontSize: 19,
+                      ),),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        viewprofile.response[index].personalityType == "Extrovert"  ? InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (BuildContext context) => CommentsPage(
+                                    pid: viewprofile.response[index].userPostId)));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  viewprofile.response[index].postTime,
+                                  'View all Comments',
                                   style: TextStyle(
                                     fontSize: 16,
-                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
+                              ],
+                            ),
+                          ),
+                        ): Container(),
+                        viewprofile.response[index].mentionUserIds.length > 0 ?
+                        InkWell(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Mentions'),
+                                    content: gettag(index),
+                                  );
+                                }
+                            );
+                            // Navigator.of(context).push(MaterialPageRoute(
+                            //     builder: (BuildContext context) =>
+                            //         Userprofile(uid :viewprofile.response[index].userId.toString())));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Mentions',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ): Container(),
+                      ],
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        viewprofile.response[index].postTime,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black54,
+                        ),
+                      ),
 //                              Padding(
 //                                padding: const EdgeInsets.only(
 //                                  top: 0.0,
@@ -752,43 +752,43 @@ class _FeedPageState extends State<FeedPage> {
 //                                  },
 //                                ),
 //                              ),
-                              ],
-                            ),
-                          ),
-                          // Padding(
-                          //   padding: const EdgeInsets.all(11.0),
-                          //   child: RaisedButton(
-                          //     color: Colors.red,
-                          //     onPressed:  () {
-                          //
-                          //       Navigator.of(context).push(MaterialPageRoute(
-                          //           builder: (BuildContext context) => CreatePosts()));
-                          //     },
-                          //
-                          //     child: Text("POST",
-                          //       style: TextStyle(
-                          //         fontSize: 20,
-                          //         color: Colors.white,
-                          //       ),),
-                          //     shape: new RoundedRectangleBorder(
-                          //       borderRadius: new BorderRadius.circular(15.0),
-                          //     ),
-                          //   ),
-                          // ),
-                        ],
-                      );
-                    },
+                    ],
                   ),
+                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(11.0),
+                //   child: RaisedButton(
+                //     color: Colors.red,
+                //     onPressed:  () {
+                //
+                //       Navigator.of(context).push(MaterialPageRoute(
+                //           builder: (BuildContext context) => CreatePosts()));
+                //     },
+                //
+                //     child: Text("POST",
+                //       style: TextStyle(
+                //         fontSize: 20,
+                //         color: Colors.white,
+                //       ),),
+                //     shape: new RoundedRectangleBorder(
+                //       borderRadius: new BorderRadius.circular(15.0),
+                //     ),
+                //   ),
+                // ),
+              ],
+            );
+          },
+        ),
         onSwipeLeft: () {
           print("Swipe Left");
         },
         onSwipeRight: () {
           print("Swipe Right");
         },
-              )
-              : Center(
-                  child: Text('No Post Available'),
-                ),
+      )
+          : Center(
+        child: Text('No Post Available'),
+      ),
     );
   }
 }

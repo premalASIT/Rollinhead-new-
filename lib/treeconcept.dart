@@ -10,7 +10,7 @@ class _TreeConceptState extends State<TreeConcept> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
+        title: Text('Tree Post'),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -28,10 +28,10 @@ class _TreeConceptState extends State<TreeConcept> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(550),
                   child: Image.asset("assests/images/avtar.png",
-                  height: 100,
-                  width: 100,
+                    height: 100,
+                    width: 100,
                   ),
-                  ),
+                ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(550),
                   child: Image.asset("assests/images/avtar.png",
@@ -81,10 +81,3 @@ class _TreeConceptState extends State<TreeConcept> {
     );
   }
 }
-// ClipRRect(
-// borderRadius: BorderRadius.circular(550),
-// child: Image.asset("assests/images/avtar.png",
-// height: 80,
-// width: 80,
-// ),
-// ),

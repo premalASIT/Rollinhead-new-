@@ -10,50 +10,50 @@ import 'package:splashscreen/splashscreen.dart';
 
 void main(){
 
-  runApp(new MaterialApp(
-    home: new MyApp(),
-    debugShowCheckedModeBanner: false,
-  ));
+    runApp(new MaterialApp(
+        home: new MyApp(),
+        debugShowCheckedModeBanner: false,
+    ));
 }
 
 class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
+    @override
+    _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  checkLoginStatus() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    if(sharedPreferences.getString('user_Id') != null) {
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Homepage()),
-              (Route<dynamic> route) => false);
-    }else{
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-          builder: (BuildContext context) => Startpage()), (
-          Route<dynamic> route) => false);
+    checkLoginStatus() async {
+        SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+        if(sharedPreferences.getString('user_Id') != null) {
+            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Homepage()),
+                    (Route<dynamic> route) => false);
+        }else{
+            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                builder: (BuildContext context) => Startpage()), (
+                Route<dynamic> route) => false);
+        }
     }
-  }
 
-  @override
-  void initState(){
-    super.initState();
-    Timer(Duration(seconds: 5),() {
-      checkLoginStatus();
-    });
-  }
+    @override
+    void initState(){
+        super.initState();
+        Timer(Duration(seconds: 5),() {
+            checkLoginStatus();
+        });
+    }
 
-  @override
-  Widget build(BuildContext context) {
-    return  Scaffold(
+    @override
+    Widget build(BuildContext context) {
+        return  Scaffold(
 
-        body: Container(
-            child: new Center(
-              child: new Image.asset('assests/images/first.png',
-                width: 200,
-                height: 200,
-              ),
+            body: Container(
+                child: new Center(
+                    child: new Image.asset('assests/images/first.png',
+                        width: 200,
+                        height: 200,
+                    ),
+                )
             )
-        )
-    );
-  }
+        );
+    }
 }
