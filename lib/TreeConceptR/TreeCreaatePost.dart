@@ -24,18 +24,20 @@ import 'package:path/path.dart' as path;
 
 class TreeCreatePost extends StatefulWidget {
   final String nodeName;
+  final int nodeNumber;
   final int selectedNode;
   final int userTreeId;
-  TreeCreatePost({this.nodeName,this.selectedNode,this.userTreeId});
+  TreeCreatePost({this.nodeName,this.nodeNumber,this.selectedNode,this.userTreeId});
   @override
-  _TreeCreatePostState createState() => _TreeCreatePostState(nodeName,selectedNode,userTreeId);
+  _TreeCreatePostState createState() => _TreeCreatePostState(nodeName,nodeNumber,selectedNode,userTreeId);
 }
 
 class _TreeCreatePostState extends State<TreeCreatePost> {
   String nodeName;
+  int nodeNumber;
   int selectedNode;
   int userTreeId;
-  _TreeCreatePostState(this.nodeName,this.selectedNode,this.userTreeId);
+  _TreeCreatePostState(this.nodeName,this.nodeNumber,this.selectedNode,this.userTreeId);
   File _imageFileOne;
   File _imageFileTwo;
   File _imageFileThree;
@@ -313,7 +315,7 @@ class _TreeCreatePostState extends State<TreeCreatePost> {
 
     Map data = {
       'UserTreeId': '$userTreeId',
-      'NodeNumber': '$selectedNode',
+      'NodeNumber': '$nodeNumber',
       'NodeName': loc.text,
     };
     var response = await http.post(
@@ -346,7 +348,7 @@ class _TreeCreatePostState extends State<TreeCreatePost> {
           // generateTreeNodeId("Node 2",2);
           Navigator.of(context).pop();
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 2",selectedNode: 2,userTreeId: userTreeId,)));
+              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 2",selectedNode: 2,userTreeId: userTreeId,nodeNumber: 2,)));
         }else if(nodeName=="Node 2"){
           Fluttertoast.showToast(
               msg: "Success",
@@ -361,11 +363,11 @@ class _TreeCreatePostState extends State<TreeCreatePost> {
         if(nodeName=="Node 1"){
           Navigator.of(context).pop();
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 2",selectedNode: 3,userTreeId: userTreeId,)));
+              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 2",selectedNode: 3,userTreeId: userTreeId,nodeNumber: 2,)));
         }else if(nodeName=="Node 2"){
           Navigator.of(context).pop();
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 3",selectedNode: 3,userTreeId: userTreeId,)));
+              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 3",selectedNode: 3,userTreeId: userTreeId,nodeNumber: 3,)));
         }else if(nodeName=="Node 3"){
           Fluttertoast.showToast(
               msg: "Success",
@@ -380,15 +382,15 @@ class _TreeCreatePostState extends State<TreeCreatePost> {
         if(nodeName=="Node 1"){
           Navigator.of(context).pop();
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 2",selectedNode: 4,userTreeId: userTreeId,)));
+              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 2",selectedNode: 4,userTreeId: userTreeId,nodeNumber:2,)));
         }else if(nodeName=="Node 2"){
           Navigator.of(context).pop();
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 3",selectedNode: 4,userTreeId: userTreeId,)));
+              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 3",selectedNode: 4,userTreeId: userTreeId,nodeNumber:3,)));
         }else if(nodeName=="Node 3"){
           Navigator.of(context).pop();
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 4",selectedNode: 4,userTreeId: userTreeId,)));
+              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 4",selectedNode: 4,userTreeId: userTreeId,nodeNumber: 4,)));
         }else if(nodeName=="Node 4"){
           Fluttertoast.showToast(
               msg: "Success",
@@ -403,19 +405,19 @@ class _TreeCreatePostState extends State<TreeCreatePost> {
         if(nodeName=="Node 1"){
           Navigator.of(context).pop();
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 2",selectedNode: 5,userTreeId: userTreeId,)));
+              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 2",selectedNode: 5,userTreeId: userTreeId,nodeNumber: 2,)));
         }else if(nodeName=="Node 2"){
           Navigator.of(context).pop();
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 3",selectedNode: 5,userTreeId: userTreeId,)));
+              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 3",selectedNode: 5,userTreeId: userTreeId,nodeNumber: 3,)));
         }else if(nodeName=="Node 3"){
           Navigator.of(context).pop();
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 4",selectedNode: 5,userTreeId: userTreeId,)));
+              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 4",selectedNode: 5,userTreeId: userTreeId,nodeNumber: 4,)));
         }else if(nodeName=="Node 4"){
           Navigator.of(context).pop();
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 5",selectedNode: 5,userTreeId: userTreeId,)));
+              builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 5",selectedNode: 5,userTreeId: userTreeId,nodeNumber: 5,)));
         }else if(nodeName=="Node 5"){
           Fluttertoast.showToast(
               msg: "Success",
@@ -472,9 +474,10 @@ class _TreeCreatePostState extends State<TreeCreatePost> {
     //     contentType: MediaType(mimeTypeData5[0], mimeTypeData5[1]));
 
     prefs.setString("imgpath", pathImages);
-    imageUploadRequest.fields['UserTreeId']= prefs.getString('user_Id') ;
+    imageUploadRequest.fields['UserTreeId']= '$userTreeId' ;
    // imageUploadRequest.fields['NodeName']= loc.text;
-    imageUploadRequest.fields['NodeNumber']= '$selectedNode';
+    imageUploadRequest.fields['NodeNumber']= '$nodeNumber';
+    //imageUploadRequest.fields['NodeNumber']= '$selectedNode';
 
     imageUploadRequest.files.add(file1);
     // imageUploadRequest.files.add(file2);

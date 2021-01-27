@@ -1,34 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:rollinhead/DisplayTreeUserstory.dart';
+import 'package:rollinhead/Model/DisplayTreeUserList/TreeUserListApi.dart';
 import 'package:rollinhead/TreeConceptR/SelectNodeOption.dart';
 import 'package:rollinhead/UploadingStory.dart';
 import 'package:rollinhead/homepage.dart';
 import 'package:rollinhead/listchats.dart';
 import 'package:rollinhead/stories.dart';
+import 'package:rollinhead/treeconcept.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:story_view/story_view.dart';
 import 'package:rollinhead/Model/storyuploaderlist/StoryuploadersApi.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class displaystory extends StatefulWidget {
+class DisplayTreeUserStory extends StatefulWidget {
   @override
-  _displaystoryState createState() => _displaystoryState();
+  _DisplayTreeUserStoryState createState() => _DisplayTreeUserStoryState();
 }
 
-class _displaystoryState extends State<displaystory> {
+class _DisplayTreeUserStoryState extends State<DisplayTreeUserStory> {
   final storyController = StoryController();
   bool _isLoading=true;
-  StoryuploadersApi story;
+  TreeUserListApi story;
+
+
   Future<List<dynamic>> fetchGetStory() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userId =prefs.getString('user_Id');
     int cusId = int.parse(userId);
 
     final response = await http.get(
-        'http://rolinhead.dolphinfiresafety.com/registration/getStoryList/$userId'
+        'http://rolinhead.dolphinfiresafety.com/registration/showTreeList/$cusId'
     );
-    story= new StoryuploadersApi.fromJsonMap(json.decode(response.body.toString()));
+    story= new TreeUserListApi.fromJsonMap(json.decode(response.body.toString()));
 
     if(response.statusCode == 200) {
 
@@ -55,7 +58,7 @@ class _displaystoryState extends State<displaystory> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Story'),
+        title: Text('Tree Story'),
         // leading: BackButton(
         //   onPressed: (){
         //     Navigator.of(context).push(MaterialPageRoute(
@@ -63,17 +66,6 @@ class _displaystoryState extends State<displaystory> {
         //   },
         // ),
         actions: <Widget>[
-          IconButton(
-            icon: new Image.asset('assests/images/t_tree.png',
-              height: 400,
-              width: 400,
-            ),
-            tooltip: 'Diary',
-            onPressed: () => {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => DisplayTreeUserStory())),
-            },
-          ),
 //           IconButton(
 //             icon: new Image.asset(
 //               'assests/images/t_tree.png',
@@ -92,28 +84,28 @@ class _displaystoryState extends State<displaystory> {
 //               // builder: (BuildContext context) => ChatsLists())),
 //             },
 //           ),
-          IconButton(
-            icon: new Image.asset(
-              'assests/images/m.png',
-              height: 400,
-              width: 400,
-            ),
-            tooltip: 'Diary',
-            onPressed: () => {
-              // Navigator.of(context).push(MaterialPageRoute(
-              //     builder: (BuildContext context) => TreeConcept())),
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => ChatsLists())),
-//                    builder: (BuildContext context) => ImageEditorPro())),
-              // builder: (BuildContext context) => ChatsLists())),
-            },
-          ),
+//           IconButton(
+//             icon: new Image.asset(
+//               'assests/images/m.png',
+//               height: 400,
+//               width: 400,
+//             ),
+//             tooltip: 'Diary',
+//             onPressed: () => {
+//               // Navigator.of(context).push(MaterialPageRoute(
+//               //     builder: (BuildContext context) => TreeConcept())),
+//               Navigator.of(context).push(MaterialPageRoute(
+//                   builder: (BuildContext context) => ChatsLists())),
+// //                    builder: (BuildContext context) => ImageEditorPro())),
+//               // builder: (BuildContext context) => ChatsLists())),
+//             },
+//           ),
           IconButton(
             icon:Icon(Icons.add),
-            tooltip: 'Diary',
+            tooltip: 'Tree',
             onPressed: () => {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => ImageEditorPro())),
+                  builder: (BuildContext context) => SelectNodeOption())),
 //                    builder: (BuildContext context) => ImageEditorPro())),
               // builder: (BuildContext context) => ChatsLists())),
             },
@@ -126,7 +118,7 @@ class _displaystoryState extends State<displaystory> {
           : GridView.builder(
         padding: EdgeInsets.only(top: 15,
         left: 5,right: 5,bottom: 5),
-        itemCount: story.response.length,
+        itemCount: story.treeUsers.length,
         shrinkWrap: true,
         primary: false,
         physics: ScrollPhysics(),
@@ -138,7 +130,10 @@ class _displaystoryState extends State<displaystory> {
           return  InkWell(
             onTap: (){
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => MoreStories(id: story.response[index].userId)));
+                  builder: (BuildContext context) => TreeConcept(userImageUrl:story.treeUsers[index].userProfilePicture ,
+                  userStoryName: story.treeUsers[index].NodeName,nodeCount:story.treeUsers[index].NodeCount,userTreeId: story.treeUsers[index].UserTreeId,)));
+              // Navigator.of(context).push(MaterialPageRoute(
+              //     builder: (BuildContext context) => MoreStories(id: story.response[index].userId)));
             },
             child: Container(
               height: 150,
@@ -151,30 +146,13 @@ class _displaystoryState extends State<displaystory> {
                           Container(
                             width: 150,
                             height: 150,
-                            // decoration: BoxDecoration(
-                            //     color: isSelected?
-                            //     Colors.black26 :
-                            //     Colors.transparent,
-                            //     borderRadius: BorderRadius.circular(16),
-                            //     border: Border.all(
-                            //       color: Colors.white,
-                            //       width: 1,
-                            //     ),
-                            //     boxShadow: isSelected
-                            //         ?[
-                            //       BoxShadow(
-                            //           color: Color(0x14000000),
-                            //           blurRadius: 10
-                            //       )
-                            //     ]: null
-                            // ),
                             child: new Container(
                               width: 80.0,
                               height: 80.0,
                               decoration: new BoxDecoration(
                                 color: const Color(0xff7c94b6),
                                 image: new DecorationImage(
-                                  image: new NetworkImage(story.response[index].userProfilePicture),
+                                  image: new NetworkImage(story.treeUsers[index].userProfilePicture),
                                   fit: BoxFit.cover,
                                 ),
                                 borderRadius: new BorderRadius.all(new Radius.circular(80.0)),
@@ -188,10 +166,9 @@ class _displaystoryState extends State<displaystory> {
 
                           SizedBox(height: 5,),
                           Text(
-                            story.response[index].firstName != null ?
-                            story.response[index].firstName :
-                            "Name"
-                            ,
+                            story.treeUsers[index].userName != null ?
+                            story.treeUsers[index].userName :
+                            "Name",
                             style:
                             TextStyle(color: Colors.black, fontSize: 15),
                           ),

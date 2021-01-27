@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rollinhead/ChatScreen.dart';
+import 'package:rollinhead/DisplayTreeUserstory.dart';
 import 'package:rollinhead/Displaystory.dart';
 import 'package:rollinhead/Model/FeedHome/UserFeedApi.dart';
 import 'package:rollinhead/Model/GetProfiles/UserProfileApi.dart';
@@ -336,6 +337,17 @@ class _FeedPageState extends State<FeedPage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            // IconButton(
+            //   icon: new Image.asset('assests/images/t_tree.png',
+            //     height: 400,
+            //     width: 400,
+            //   ),
+            //   tooltip: 'Diary',
+            //   onPressed: () => {
+            //     Navigator.of(context).push(MaterialPageRoute(
+            //         builder: (BuildContext context) => DisplayTreeUserStory())),
+            //   },
+            // ),
             IconButton(
               icon: new Image.asset('assests/images/d.png',
                 height: 400,

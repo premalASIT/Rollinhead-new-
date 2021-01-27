@@ -17,14 +17,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SelectNodeOption extends StatefulWidget {
   final String nodeName;
-  SelectNodeOption({this.nodeName});
+  final int nodeNumber;
+  SelectNodeOption({this.nodeName,this.nodeNumber});
   @override
-  _SelectNodeOptionState createState() => _SelectNodeOptionState(nodeName);
+  _SelectNodeOptionState createState() => _SelectNodeOptionState(nodeName,nodeNumber);
 }
 
 class _SelectNodeOptionState extends State<SelectNodeOption> {
   String nodeName;
-  _SelectNodeOptionState(this.nodeName);
+  int nodeNumber;
+  _SelectNodeOptionState(this.nodeName,this.nodeNumber);
   File _imageFile;
   String fileName;
   List<Filter> filters = presetFiltersList;
@@ -40,12 +42,13 @@ class _SelectNodeOptionState extends State<SelectNodeOption> {
 
   // final String path = await getApplicationDocumentsDirectory().path;
 
-  generateTreeId(String nodeName,int selectedNode) async {
+  generateTreeId(String nodeName,int selectedNode,int nodeNumber) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userid = prefs.getString('user_Id');
 
     Map data = {
       'UserId': userid,
+      'nodeCount': '$selectedNode',
     };
     var response = await http.post(
         "http://rolinhead.dolphinfiresafety.com/registration/createBlankUserTree",
@@ -63,7 +66,7 @@ class _SelectNodeOptionState extends State<SelectNodeOption> {
             timeInSecForIosWeb: 2);
 
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => TreeCreatePost(nodeName:nodeName,selectedNode: selectedNode,userTreeId: selectedNodeTreeApi.userTreeId,)));
+            builder: (BuildContext context) => TreeCreatePost(nodeName:nodeName,selectedNode: selectedNode,userTreeId: selectedNodeTreeApi.userTreeId,nodeNumber:nodeNumber,)));
 
         print(response.body);
       } else {
@@ -128,7 +131,7 @@ class _SelectNodeOptionState extends State<SelectNodeOption> {
                     setState(() {
                       _isLoading = true;
                     });
-                    generateTreeId("Node 1",1);
+                    generateTreeId("Node 1",1,1);
                     // Navigator.of(context).push(MaterialPageRoute(
                     //     builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 1",selectedNode: 1,)));
                   },
@@ -150,7 +153,7 @@ class _SelectNodeOptionState extends State<SelectNodeOption> {
                     setState(() {
                       _isLoading = true;
                     });
-                    generateTreeId("Node 1",2);
+                    generateTreeId("Node 1",2,1);
                     // Navigator.of(context).push(MaterialPageRoute(
                     //     builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 1",selectedNode: 2,)));
                   },
@@ -172,7 +175,7 @@ class _SelectNodeOptionState extends State<SelectNodeOption> {
                     setState(() {
                       _isLoading = true;
                     });
-                    generateTreeId("Node 1",3);
+                    generateTreeId("Node 1",3,1);
                     // Navigator.of(context).push(MaterialPageRoute(
                     //     builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 1",selectedNode: 3,)));
                   },
@@ -194,7 +197,7 @@ class _SelectNodeOptionState extends State<SelectNodeOption> {
                     setState(() {
                       _isLoading = true;
                     });
-                    generateTreeId("Node 1",4);
+                    generateTreeId("Node 1",4,1);
 
                     // Navigator.of(context).push(MaterialPageRoute(
                     //     builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 1",selectedNode: 4,)));
@@ -217,7 +220,7 @@ class _SelectNodeOptionState extends State<SelectNodeOption> {
                     setState(() {
                       _isLoading = true;
                     });
-                    generateTreeId("Node 1",5);
+                    generateTreeId("Node 1",5,1);
 
                     // Navigator.of(context).push(MaterialPageRoute(
                     //     builder: (BuildContext context) => TreeCreatePost(nodeName:"Node 1",selectedNode: 5,)));
