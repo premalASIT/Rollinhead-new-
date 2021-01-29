@@ -456,21 +456,17 @@ class _CreatePostsState extends State<CreatePosts> {
               padding: new EdgeInsets.fromLTRB(8, 8, 8, 8),
 
             ),
+            SizedBox(
+              width: 90,
+              height: 45,
+              child: RaisedButton(
+                color: Colors.red,
+                onPressed: () async {
+                  setState(() {
+                    _isLoading = true;
+                  });
 
-            FlatButton(
-              textColor: Colors.red,
-              //color: Colors.red,
-              child: Text(" Post",
-                style: TextStyle(
-                  color: Colors.red,
-                  fontSize: 22,
-                ),),
-              onPressed: () async {
-                setState(() {
-                  _isLoading = true;
-                });
-
-                if (_imageFile != null) {
+                  if (_imageFile != null) {
 
 //  ByteData bytes1 = await rootBundle.load(ImgPath);
 //                  final tempDir = await getTemporaryDirectory();
@@ -484,24 +480,78 @@ class _CreatePostsState extends State<CreatePosts> {
 //                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
 //                      builder: (BuildContext context) => WidgetEditableImage(imagem: image)), (
 //                      Route<dynamic> route) => false);
-                 uploadImageMedia(_imageFile,msg.text,loc.text);
-              }
-                else if(_video!=null){
-                  setState(() {
-                    _isLoading = true;
-                  });
-                  uploadVideoMedia(_video,msg.text,loc.text);
-                }
-                else{
-                  Fluttertoast.showToast(
-                      msg:"Pick the image or video",
-                      toastLength: Toast.LENGTH_LONG,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIosWeb: 2
-                  );
-                }
-              }
+                    uploadImageMedia(_imageFile,msg.text,loc.text);
+                  }
+                  else if(_video!=null){
+                    setState(() {
+                      _isLoading = true;
+                    });
+                    uploadVideoMedia(_video,msg.text,loc.text);
+                  }
+                  else{
+                    Fluttertoast.showToast(
+                        msg:"Pick the image or video",
+                        toastLength: Toast.LENGTH_LONG,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 2
+                    );
+                  }
+                },
+                child: Text(" Post",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                  ),),
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(15.0),
+                ),
+              ),
             ),
+//             FlatButton(
+//               textColor: Colors.red,
+//               //color: Colors.red,
+//               child: Text(" Post",
+//                 style: TextStyle(
+//                   color: Colors.red,
+//                   fontSize: 22,
+//                 ),),
+//               onPressed: () async {
+//                 setState(() {
+//                   _isLoading = true;
+//                 });
+//
+//                 if (_imageFile != null) {
+//
+// //  ByteData bytes1 = await rootBundle.load(ImgPath);
+// //                  final tempDir = await getTemporaryDirectory();
+// //                  final file = await new File('${tempDir.path}/imageexam.jpg').create();
+// ////                  file.writeAsBytesSync(_imageFile);
+// //                  file.copySync(_imageFile.path);
+// //                  ByteData bytes = await rootBundle.load(_imageFile.path);
+// //                  final buffer = bytes.buffer;
+// //                  var image = buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
+// //                  // uploadImageMedia(_imageFile, "msg.text", "loc.text");
+// //                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+// //                      builder: (BuildContext context) => WidgetEditableImage(imagem: image)), (
+// //                      Route<dynamic> route) => false);
+//                  uploadImageMedia(_imageFile,msg.text,loc.text);
+//               }
+//                 else if(_video!=null){
+//                   setState(() {
+//                     _isLoading = true;
+//                   });
+//                   uploadVideoMedia(_video,msg.text,loc.text);
+//                 }
+//                 else{
+//                   Fluttertoast.showToast(
+//                       msg:"Pick the image or video",
+//                       toastLength: Toast.LENGTH_LONG,
+//                       gravity: ToastGravity.BOTTOM,
+//                       timeInSecForIosWeb: 2
+//                   );
+//                 }
+//               }
+//             ),
             SizedBox(height: 180,),
             Column(
               mainAxisAlignment: MainAxisAlignment.end,

@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:rollinhead/Model/DisplayPollUserStroy/DisplayUserPollStoryApi.dart';
 import 'package:rollinhead/Model/DisplayTreeUserList/TreeUserListApi.dart';
-import 'package:rollinhead/TreeConceptR/SelectNodeOption.dart';
-import 'package:rollinhead/UploadingStory.dart';
-import 'package:rollinhead/homepage.dart';
-import 'package:rollinhead/listchats.dart';
-import 'package:rollinhead/stories.dart';
+import 'package:rollinhead/PollConceptP/CreatePollPost.dart';
+import 'package:rollinhead/PollConceptP/DisplayPollListOfUserStory.dart';
 import 'package:rollinhead/treeconcept.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:story_view/story_view.dart';
-import 'package:rollinhead/Model/storyuploaderlist/StoryuploadersApi.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class DisplayTreeUserStory extends StatefulWidget {
+class DisplayPollUserStory extends StatefulWidget {
   @override
-  _DisplayTreeUserStoryState createState() => _DisplayTreeUserStoryState();
+  _DisplayPollUserStoryState createState() => _DisplayPollUserStoryState();
 }
 
-class _DisplayTreeUserStoryState extends State<DisplayTreeUserStory> {
+class _DisplayPollUserStoryState extends State<DisplayPollUserStory> {
   final storyController = StoryController();
   bool _isLoading=true;
-  TreeUserListApi story;
+  DisplayUserPollStoryApi story;
 
 
   Future<List<dynamic>> fetchGetStory() async {
@@ -29,9 +26,9 @@ class _DisplayTreeUserStoryState extends State<DisplayTreeUserStory> {
     int cusId = int.parse(userId);
 
     final response = await http.get(
-        'http://rolinhead.dolphinfiresafety.com/registration/showTreeList/$cusId'
+        'https://rolinhead.dolphinfiresafety.com/registration/getAllUserPoll/$cusId'
     );
-    story= new TreeUserListApi.fromJsonMap(json.decode(response.body.toString()));
+    story= new DisplayUserPollStoryApi.fromJsonMap(json.decode(response.body.toString()));
 
     if(response.statusCode == 200) {
 
@@ -58,7 +55,7 @@ class _DisplayTreeUserStoryState extends State<DisplayTreeUserStory> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tree Story'),
+        title: Text('Poll Story'),
         // leading: BackButton(
         //   onPressed: (){
         //     Navigator.of(context).push(MaterialPageRoute(
@@ -66,46 +63,25 @@ class _DisplayTreeUserStoryState extends State<DisplayTreeUserStory> {
         //   },
         // ),
         actions: <Widget>[
-//           IconButton(
-//             icon: new Image.asset(
-//               'assests/images/t_tree.png',
-//               height: 400,
-//               width: 400,
-//             ),
-//             tooltip: 'Diary',
-//             onPressed: () => {
-//               Navigator.of(context).push(MaterialPageRoute(
-//                   builder: (BuildContext context) => SelectNodeOption())),
-//               // Navigator.of(context).push(MaterialPageRoute(
-//               //     builder: (BuildContext context) => TreeConcept())),
-//               // Navigator.of(context).push(MaterialPageRoute(
-//               //     builder: (BuildContext context) => ChatsLists())),
-// //                    builder: (BuildContext context) => ImageEditorPro())),
-//               // builder: (BuildContext context) => ChatsLists())),
-//             },
-//           ),
-//           IconButton(
-//             icon: new Image.asset(
-//               'assests/images/m.png',
-//               height: 400,
-//               width: 400,
-//             ),
-//             tooltip: 'Diary',
-//             onPressed: () => {
-//               // Navigator.of(context).push(MaterialPageRoute(
-//               //     builder: (BuildContext context) => TreeConcept())),
-//               Navigator.of(context).push(MaterialPageRoute(
-//                   builder: (BuildContext context) => ChatsLists())),
-// //                    builder: (BuildContext context) => ImageEditorPro())),
-//               // builder: (BuildContext context) => ChatsLists())),
-//             },
-//           ),
+          IconButton(
+            icon: new Image.asset('assests/images/p.png',
+              height: 400,
+              width: 400,
+            ),
+            tooltip: 'My Poll',
+            onPressed: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              String userId =prefs.getString('user_Id');
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => DisplayPollListOfUserStory(pollUserId: userId,isMe: "Yes",)));
+            }
+          ),
           IconButton(
             icon:Icon(Icons.add),
-            tooltip: 'Tree',
+            tooltip: 'Poll',
             onPressed: () => {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => SelectNodeOption())),
+                  builder: (BuildContext context) => CreatePollPostPage())),
 //                    builder: (BuildContext context) => ImageEditorPro())),
               // builder: (BuildContext context) => ChatsLists())),
             },
@@ -115,10 +91,10 @@ class _DisplayTreeUserStoryState extends State<DisplayTreeUserStory> {
       ),
       body:_isLoading
           ? Center(child: CircularProgressIndicator())
-          : story.treeUsers.length > 0 ?GridView.builder(
+          : story.userPolls.length > 0 ?GridView.builder(
         padding: EdgeInsets.only(top: 15,
         left: 5,right: 5,bottom: 5),
-        itemCount: story.treeUsers.length,
+        itemCount: story.userPolls.length,
         shrinkWrap: true,
         primary: false,
         physics: ScrollPhysics(),
@@ -129,11 +105,11 @@ class _DisplayTreeUserStoryState extends State<DisplayTreeUserStory> {
         itemBuilder: (BuildContext context, int index) {
           return  InkWell(
             onTap: (){
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => TreeConcept(userImageUrl:story.treeUsers[index].userProfilePicture ,
-                  userStoryName: story.treeUsers[index].NodeName,nodeCount:story.treeUsers[index].NodeCount,userTreeId: story.treeUsers[index].UserTreeId,)));
               // Navigator.of(context).push(MaterialPageRoute(
-              //     builder: (BuildContext context) => MoreStories(id: story.response[index].userId)));
+              //     builder: (BuildContext context) => TreeConcept(userImageUrl:story.treeUsers[index].userProfilePicture ,
+              //     userStoryName: story.treeUsers[index].NodeName,nodeCount:story.treeUsers[index].NodeCount,userTreeId: story.treeUsers[index].UserTreeId,)));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => DisplayPollListOfUserStory(pollUserId: story.userPolls[index].UserId,isMe: "No",)));
             },
             child: Container(
               height: 150,
@@ -152,8 +128,8 @@ class _DisplayTreeUserStoryState extends State<DisplayTreeUserStory> {
                               decoration: new BoxDecoration(
                                 color: const Color(0xff7c94b6),
                                 image: new DecorationImage(
-                                  image: new NetworkImage(story.treeUsers[index].userProfilePicture),
-                                  fit: BoxFit.cover,
+                                  image: new NetworkImage(story.userPolls[index].userProfilePicture),
+                                  fit: BoxFit.fill,
                                 ),
                                 borderRadius: new BorderRadius.all(new Radius.circular(80.0)),
                                 border: new Border.all(
@@ -166,8 +142,8 @@ class _DisplayTreeUserStoryState extends State<DisplayTreeUserStory> {
 
                           SizedBox(height: 5,),
                           Text(
-                            story.treeUsers[index].userName != null ?
-                            story.treeUsers[index].userName :
+                            story.userPolls[index].userName != null ?
+                            story.userPolls[index].userName :
                             "Name",
                             style:
                             TextStyle(color: Colors.black, fontSize: 15),

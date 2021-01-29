@@ -203,7 +203,7 @@ class _UserprofileState extends State<Userprofile> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return _isLoading ? Center(child: CircularProgressIndicator()) : Scaffold(
       appBar: AppBar(
         title: Text(profile.response.userName),
           actions: <Widget>[
@@ -216,7 +216,7 @@ class _UserprofileState extends State<Userprofile> {
       ),
       ],
       ),
-      body: _isLoading ? Center(child: CircularProgressIndicator()) : SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Row(
@@ -224,11 +224,12 @@ class _UserprofileState extends State<Userprofile> {
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(160),
+                    borderRadius: BorderRadius.circular(75),
 
                     child: Image.network(profile.response.profilePictureUrl,
                       height: 150,
                       width: 150,
+                      fit: BoxFit.fill,
                     ),
 
                   ),

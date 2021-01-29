@@ -320,7 +320,7 @@ class _DiscoverfeedState extends State<Discoverfeed> {
 //                    ),
                     Container(
                       width: 170.0,
-                      height: 180.0,
+                      height: 150.0,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                             fit: BoxFit.cover, image: NetworkImage(usersListApi.response[index].profilePictureUrl,

@@ -67,9 +67,8 @@ class _EditprofileState extends State<Editprofile> {
         print(response.body);
         print("done2");
         print("done");
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) =>
-                Homepage()));
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Homepage()),
+                (Route<dynamic> route) => false);
         Fluttertoast.showToast(
             msg: updprofile.status.message,
             toastLength: Toast.LENGTH_LONG,
@@ -221,9 +220,8 @@ class _EditprofileState extends State<Editprofile> {
                               _isLoading= true;
                             });
                           // Navigator.of(context).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  Homepage()));
+                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Homepage()),
+                                    (Route<dynamic> route) => false);
                         }
                         else{
                           Fluttertoast.showToast(

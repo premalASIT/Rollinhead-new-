@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rollinhead/DisplayTreeUserstory.dart';
+import 'package:rollinhead/PollConceptP/CreatePollPost.dart';
+import 'package:rollinhead/PollConceptP/DisplayPollUserStory.dart';
 import 'package:rollinhead/TreeConceptR/SelectNodeOption.dart';
 import 'package:rollinhead/UploadingStory.dart';
 import 'package:rollinhead/homepage.dart';
@@ -64,11 +66,22 @@ class _displaystoryState extends State<displaystory> {
         // ),
         actions: <Widget>[
           IconButton(
+            icon: new Image.asset('assests/images/p.png',
+              height: 400,
+              width: 400,
+            ),
+            tooltip: 'Poll',
+            onPressed: () => {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => DisplayPollUserStory())),
+            },
+          ),
+          IconButton(
             icon: new Image.asset('assests/images/t_tree.png',
               height: 400,
               width: 400,
             ),
-            tooltip: 'Diary',
+            tooltip: 'Tree',
             onPressed: () => {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) => DisplayTreeUserStory())),

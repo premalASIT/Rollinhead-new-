@@ -743,18 +743,11 @@ class _TreeCreatePostState extends State<TreeCreatePost> {
               padding: new EdgeInsets.fromLTRB(8, 8, 8, 8),
 
             ),
-            FlatButton(
-                textColor: Colors.red,
-                //color: Colors.red,
-                child: Text(nodeName=="Node 5" || selectedNode==1?"Submit"
-                    :selectedNode==2?nodeName=="Node 2"?"Submit":"Next"
-                    :selectedNode==3?nodeName=="Node 3"?"Submit":"Next"
-                    :selectedNode==4?nodeName=="Node 4"?"Submit":"Next"
-                    :"Next",
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 22,
-                  ),),
+            SizedBox(
+              width: 120,
+              height: 45,
+              child: RaisedButton(
+                color: Colors.red,
                 onPressed: () async {
                   if(_imageFileOne==null && _imageFileTwo==null &&
                       _imageFileThree==null && _imageFileFour==null && _imageFileFive==null || loc.text==""){
@@ -793,8 +786,73 @@ class _TreeCreatePostState extends State<TreeCreatePost> {
                   //         timeInSecForIosWeb: 2
                   //     );
                   //   }
-                }
+                },
+                child: Text(nodeName=="Node 5" || selectedNode==1?"Submit"
+                    :selectedNode==2?nodeName=="Node 2"?"Submit":"Next"
+                    :selectedNode==3?nodeName=="Node 3"?"Submit":"Next"
+                    :selectedNode==4?nodeName=="Node 4"?"Submit":"Next"
+                    :"Next",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                  ),),
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(15.0),
+                ),
+              ),
             ),
+            // FlatButton(
+            //     textColor: Colors.red,
+            //     //color: Colors.red,
+            //     child: Text(nodeName=="Node 5" || selectedNode==1?"Submit"
+            //         :selectedNode==2?nodeName=="Node 2"?"Submit":"Next"
+            //         :selectedNode==3?nodeName=="Node 3"?"Submit":"Next"
+            //         :selectedNode==4?nodeName=="Node 4"?"Submit":"Next"
+            //         :"Next",
+            //       style: TextStyle(
+            //         color: Colors.red,
+            //         fontSize: 22,
+            //       ),),
+            //     onPressed: () async {
+            //       if(_imageFileOne==null && _imageFileTwo==null &&
+            //           _imageFileThree==null && _imageFileFour==null && _imageFileFive==null || loc.text==""){
+            //         Fluttertoast.showToast(
+            //             msg: "Please Fill All Images & Name Text",
+            //             toastLength: Toast.LENGTH_LONG,
+            //             gravity: ToastGravity.BOTTOM,
+            //             timeInSecForIosWeb: 2
+            //         );
+            //       }else{
+            //         setState(() {
+            //           _isLoading=true;
+            //         });
+            //         generateTreeNodeId();
+            //       }
+            //
+            //
+            //       //   setState(() {
+            //       //     _isLoading = true;
+            //       //   });
+            //       //
+            //       //   if (_imageFile != null) {
+            //       //    uploadImageMedia(_imageFile,msg.text,loc.text);
+            //       // }
+            //       //   else if(_video!=null){
+            //       //     setState(() {
+            //       //       _isLoading = true;
+            //       //     });
+            //       //     uploadVideoMedia(_video,msg.text,loc.text);
+            //       //   }
+            //       //   else{
+            //       //     Fluttertoast.showToast(
+            //       //         msg:"Pick the image or video",
+            //       //         toastLength: Toast.LENGTH_LONG,
+            //       //         gravity: ToastGravity.BOTTOM,
+            //       //         timeInSecForIosWeb: 2
+            //       //     );
+            //       //   }
+            //     }
+            // ),
             // FlatButton(
             //   textColor: Colors.red,
             //   //color: Colors.red,

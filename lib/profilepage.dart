@@ -28,6 +28,15 @@ class _ProfilepageState extends State<Profilepage> {
   String user;
   bool _isLoading=false;
   UserProfileApi profile;
+
+  @override
+  void initState() {
+    super.initState();
+    _isLoading=true;
+    fetchUsersList();
+
+  }
+
   Future<List<dynamic>> fetchUsersList() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userid =prefs.getString('user_Id');
@@ -86,17 +95,11 @@ class _ProfilepageState extends State<Profilepage> {
     }
 
   }
-  @override
-  void initState() {
-    super.initState();
-    _isLoading=true;
 
-    fetchUsersList();
 
-  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return _isLoading ? Center(child: CircularProgressIndicator()) :  Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
 
@@ -117,7 +120,7 @@ class _ProfilepageState extends State<Profilepage> {
         ],
       ),
 
-      body:  _isLoading ? Center(child: CircularProgressIndicator()) : 
+      body:
       SingleChildScrollView(
         child: Center(
 
@@ -129,9 +132,10 @@ class _ProfilepageState extends State<Profilepage> {
                     Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(160),
+                        borderRadius: BorderRadius.circular(75),
 
                         child: Image.network(profile.response.profilePictureUrl,
+                          fit: BoxFit.fill,
                           height: 150,
                           width: 150,
                         ),

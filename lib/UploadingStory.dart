@@ -87,9 +87,8 @@ class _ImageEditorProState extends State<ImageEditorPro> {
         // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
         //     builder: (BuildContext context) => FeedPage()), (
         //     Route<dynamic> route) => false);
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => Homepage()
-        ));
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Homepage()),
+                (Route<dynamic> route) => false);
         print(value);
         return Future.value(value);
       });
