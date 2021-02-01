@@ -55,13 +55,19 @@ class _DisplayPollUserStoryState extends State<DisplayPollUserStory> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Poll Story'),
-        // leading: BackButton(
-        //   onPressed: (){
-        //     Navigator.of(context).push(MaterialPageRoute(
-        //         builder: (BuildContext context) => Homepage()));
-        //   },
-        // ),
+        backgroundColor: Colors.white,
+        title: Text('Poll Story',
+          style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold
+          ),),
+        leading: IconButton(
+          icon: Container(
+            padding: const EdgeInsets.all(10),
+            child: Icon(Icons.arrow_back, color:Colors.black, size: 24),
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         actions: <Widget>[
           IconButton(
             icon: new Image.asset('assests/images/p.png',
@@ -77,7 +83,7 @@ class _DisplayPollUserStoryState extends State<DisplayPollUserStory> {
             }
           ),
           IconButton(
-            icon:Icon(Icons.add),
+            icon:Icon(Icons.add,color: Colors.black,),
             tooltip: 'Poll',
             onPressed: () => {
               Navigator.of(context).push(MaterialPageRoute(

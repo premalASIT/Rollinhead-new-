@@ -25,10 +25,6 @@ import 'package:screenshot/screenshot.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signature/signature.dart';
 import 'package:http/http.dart' as http;
-TextEditingController heightcontroler = TextEditingController();
-TextEditingController widthcontroler = TextEditingController();
-var width = 300;
-var height = 300;
 
 List fontsize = [];
 var howmuchwidgetis = 0;
@@ -51,11 +47,16 @@ var slider = 0.0;
 
 class _ImageEditorProState extends State<ImageEditorPro> {
   // create some values
+  TextEditingController heightcontroler = TextEditingController();
+  TextEditingController widthcontroler = TextEditingController();
+  var width = 300;
+  var height = 300;
   Color pickerColor = Color(0xff443a49);
   Color currentColor = Color(0xff443a49);
   bool   _isLoading = false;
   File _video;
   UploadStoryApi story;
+  File _imageFile;
   //Image
   Future uploadStoryMedia(File fileimage,String Msg,Loc) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -127,9 +128,8 @@ class _ImageEditorProState extends State<ImageEditorPro> {
         // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
         //     builder: (BuildContext context) => FeedPage()), (
         //     Route<dynamic> route) => false);
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => Homepage()
-        ));
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Homepage()),
+                (Route<dynamic> route) => false);
         print(value);
         return Future.value(value);
       });
@@ -169,7 +169,8 @@ class _ImageEditorProState extends State<ImageEditorPro> {
   @override
   void dispose() {
     timeprediction.cancel();
-    // TODO: implement dispose
+    _image.delete();
+    _imageFile.delete();
     super.dispose();
   }
 
@@ -185,6 +186,7 @@ class _ImageEditorProState extends State<ImageEditorPro> {
     // TODO: implement initState
     super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -268,9 +270,9 @@ class _ImageEditorProState extends State<ImageEditorPro> {
                 }),
             new FlatButton(
                 child: new Text("Done"),
-                textColor: Colors.white,
+                textColor: Colors.black,
                 onPressed: () {
-                  File _imageFile;
+
                   _imageFile = null;
                   screenshotController
                       .capture(
@@ -645,6 +647,11 @@ class _SignatState extends State<Signat> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController heightcontroler = TextEditingController();
+    TextEditingController widthcontroler = TextEditingController();
+    var width = 300;
+    var height = 300;
+
     return //SIGNATURE CANVAS
       //SIGNATURE CANVAS
       ListView(

@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'package:rollinhead/Model/UploadDiary/UploaddiaryApi.dart';
 import 'package:rollinhead/feedspage.dart';
+import 'package:rollinhead/homepage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class Diarypage extends StatefulWidget {
   @override
@@ -37,7 +38,6 @@ class _DiarypageState extends State<Diarypage> {
     imageUploadRequest.fields['isPublic']= type;
     imageUploadRequest.files.add(file);
     try {
-      _isLoading = false;
 
       final streamedResponse = await imageUploadRequest.send();
 
@@ -48,10 +48,12 @@ class _DiarypageState extends State<Diarypage> {
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 2
         );
+          setState(() {
+            _isLoading = false;
+          });
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Homepage()),
+                (Route<dynamic> route) => false);
 
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => FeedPage()
-        ));
         print(value);
         return Future.value(value);
       });
@@ -106,9 +108,8 @@ class _DiarypageState extends State<Diarypage> {
                  //   borderRadius: BorderRadius.circular(160),
 
                    _imageFile == null
-                        ?  Image.asset( "assests/images/avtar.png",
-                      height: 270,
-                      width:350,
+                        ?  Image.asset( "assests/images/camera_image.png",
+                      height: 250,
                       fit: BoxFit.fill,)
                         :Image.file(_imageFile,
                       height: 270,
@@ -142,7 +143,7 @@ class _DiarypageState extends State<Diarypage> {
                         maxLines: 50,
                         autofocus: false,
                         controller: note,
-                        style: TextStyle(fontSize: 15.0, color: Color(0xFFbdc6cf)),
+                        style: TextStyle(fontSize: 15.0, color: Colors.black),
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,

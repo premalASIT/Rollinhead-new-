@@ -142,7 +142,7 @@ class _EditPhotoScreenState extends State<EditPhotoScreen> {
       appBar: AppBar(
           title: Text(
             "Edit Image",
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
           ),
           actions: <Widget>[
             IconButton(
@@ -233,36 +233,36 @@ class _EditPhotoScreenState extends State<EditPhotoScreen> {
         BottomNavigationBarItem(
           icon: Icon(
             Icons.flip,
-            color: Colors.white,
+            color: Colors.black,
           ),
           title: Text(
             'Flip',
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ),
         BottomNavigationBarItem(
           icon: Icon(
             Icons.rotate_left,
-            color: Colors.white,
+            color: Colors.black,
           ),
           title: Text(
             'Rotate left',
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ),
         BottomNavigationBarItem(
           icon: Icon(
             Icons.rotate_right,
-            color: Colors.white,
+            color: Colors.black,
           ),
           title: Text(
             'Rotate right',
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ),
@@ -333,6 +333,7 @@ class _EditPhotoScreenState extends State<EditPhotoScreen> {
         new MaterialPageRoute(
           builder: (context) =>
           new PhotoFilterSelector(
+            appBarColor: Colors.white,
             title: Text("Post"),
             image: image1,
             filters: presetFiltersList,
@@ -363,6 +364,10 @@ class _EditPhotoScreenState extends State<EditPhotoScreen> {
 
           });
         }else{
+          setState(()  {
+            image = imagefile['image_filtered'];
+
+          });
           print('else set state of _img file');
         }
       }

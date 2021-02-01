@@ -63,8 +63,20 @@ class _DisplayResultOfQuestionsAnswerPollState extends State<DisplayResultOfQues
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Text(pollName,
-        overflow: TextOverflow.ellipsis,),
+        overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold
+          ),),
+        leading: IconButton(
+          icon: Container(
+            padding: const EdgeInsets.all(10),
+            child: Icon(Icons.arrow_back, color:Colors.black, size: 24),
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
       ),
       body: _isLoading ? Center(child: CircularProgressIndicator()) :ListView(
         children: [

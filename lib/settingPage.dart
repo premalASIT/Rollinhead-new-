@@ -59,7 +59,7 @@ class _SettingPage1State extends State<SettingPage1> {
   Changepesonal(String a) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userId =prefs.getString('user_Id');
-    int cusId = int.parse(userId);
+    print(a);
     Map data = {
       'userId': userId,
       'PersonalityType' : a,
@@ -86,14 +86,16 @@ class _SettingPage1State extends State<SettingPage1> {
   }
   void toogle(bool s){
     if(s == true){
-      Changepesonal("Introvert");
+      Changepesonal("Extrovert");
       setState(() {
         _isLoading = false;
       });
     }
     else if(s == false){
-      Changepesonal("Extrovert");
-      _isLoading = false;
+      Changepesonal("Introvert");
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
   @override
@@ -252,7 +254,6 @@ class _SettingPage1State extends State<SettingPage1> {
                 ),
                 Switch(
                   value: isSwitched,
-
                   onChanged: (value){
                     setState(() {
                       isSwitched=value;

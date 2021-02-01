@@ -350,8 +350,8 @@ class _FeedPageState extends State<FeedPage> {
             // ),
             IconButton(
               icon: new Image.asset('assests/images/d.png',
-                height: 400,
-                width: 400,
+                height: 100,
+                width: 100,
               ),
               tooltip: 'Diary',
               onPressed: () => {
@@ -372,8 +372,8 @@ class _FeedPageState extends State<FeedPage> {
             IconButton(
               icon: new Image.asset(
                 'assests/images/S.png',
-                height: 350,
-                width: 350,
+                height: 100,
+                width: 100,
               ),
               tooltip: 'Diary',
               onPressed: () => {
@@ -560,8 +560,8 @@ class _FeedPageState extends State<FeedPage> {
                                     bottom: 8.0, top: 8.0),
                                 child: Image.asset(
                                   "assests/images/star.png",
-                                  height: 50,
-                                  width: 50,
+                                  height: 40,
+                                  width: 40,
                                 ),
                               ),
 
@@ -586,8 +586,8 @@ class _FeedPageState extends State<FeedPage> {
                                     bottom: 8.0, top: 8.0),
                                 child: Image.asset(
                                   "assests/images/circle.png",
-                                  height: 50,
-                                  width: 50,
+                                  height: 40,
+                                  width: 40,
                                 ),
                               ),
                               Text(viewprofile.response[index].comments
@@ -611,7 +611,7 @@ class _FeedPageState extends State<FeedPage> {
                             padding: const EdgeInsets.only(
                                 bottom: 8.0, top: 8.0),
                             child: Image.asset("assests/images/play.png",
-                                height: 50, width: 50),
+                                height: 40, width: 40),
                           ),
                         ),
                       ],
@@ -668,7 +668,7 @@ class _FeedPageState extends State<FeedPage> {
                   children: <Widget>[
                     Text(viewprofile.response[index].content,
                       style: TextStyle(
-                        fontSize: 19,
+                        fontSize: 16,
                       ),),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -739,7 +739,7 @@ class _FeedPageState extends State<FeedPage> {
                       Text(
                         viewprofile.response[index].postTime,
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 14,
                           color: Colors.black54,
                         ),
                       ),

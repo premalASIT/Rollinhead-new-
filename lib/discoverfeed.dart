@@ -206,7 +206,7 @@ class _DiscoverfeedState extends State<Discoverfeed> {
     _actionButtons = <Widget>[
       IconButton(
         tooltip: "Search",
-        icon: const Icon(Icons.search),
+        icon: const Icon(Icons.search,color: Colors.black,),
         onPressed: () {
           setState(() {
             _searhBarOpen = true;
@@ -245,7 +245,7 @@ class _DiscoverfeedState extends State<Discoverfeed> {
       appBar: AppBar(
         backgroundColor: _isSearching
             ? Colors.white
-            : null,
+            : Colors.white,
         leading: _isSearching
             ? IconButton(
           icon: Icon(Icons.arrow_back),
@@ -265,6 +265,10 @@ class _DiscoverfeedState extends State<Discoverfeed> {
             ? _searchBar
             : Text(
           'Search',
+          style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold
+          ),
         ),
         actions: _isSearching
             ? null

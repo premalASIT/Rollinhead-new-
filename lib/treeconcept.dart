@@ -45,7 +45,19 @@ class _TreeConceptState extends State<TreeConcept> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tree Post'),
+        backgroundColor: Colors.white,
+        title: Text('Tree Post',
+          style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold
+          ),),
+        leading: IconButton(
+          icon: Container(
+            padding: const EdgeInsets.all(10),
+            child: Icon(Icons.arrow_back, color:Colors.black, size: 24),
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(

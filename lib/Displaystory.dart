@@ -57,7 +57,20 @@ class _displaystoryState extends State<displaystory> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Story'),
+        backgroundColor: Colors.white,
+        title: Text('Story',
+          style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold
+          ),
+        ),
+        leading: IconButton(
+          icon: Container(
+            padding: const EdgeInsets.all(10),
+            child: Icon(Icons.arrow_back, color:Colors.black, size: 24),
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         // leading: BackButton(
         //   onPressed: (){
         //     Navigator.of(context).push(MaterialPageRoute(
@@ -67,8 +80,8 @@ class _displaystoryState extends State<displaystory> {
         actions: <Widget>[
           IconButton(
             icon: new Image.asset('assests/images/p.png',
-              height: 400,
-              width: 400,
+              height: 50,
+              width: 50,
             ),
             tooltip: 'Poll',
             onPressed: () => {
@@ -122,7 +135,7 @@ class _displaystoryState extends State<displaystory> {
             },
           ),
           IconButton(
-            icon:Icon(Icons.add),
+            icon:Icon(Icons.add,color: Colors.black,),
             tooltip: 'Diary',
             onPressed: () => {
               Navigator.of(context).push(MaterialPageRoute(

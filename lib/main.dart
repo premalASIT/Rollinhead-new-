@@ -11,6 +11,8 @@ import 'package:splashscreen/splashscreen.dart';
 void main(){
 
     runApp(new MaterialApp(
+        theme:
+        ThemeData(primaryColor: Colors.white,accentColor: Colors.black),
         home: new MyApp(),
         debugShowCheckedModeBanner: false,
     ));

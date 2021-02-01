@@ -13,7 +13,6 @@ class Publicstory extends StatefulWidget {
 class _PublicstoryState extends State<Publicstory> {
   static int page = 0;
   ScrollController _sc = new ScrollController();
-  bool isLoading = false;
   var finaldate = "";
   bool _isLoading = false;
   int flag = 0;
@@ -24,7 +23,7 @@ class _PublicstoryState extends State<Publicstory> {
   @override
   void initState() {
     // this._getMoreData(max);
-    // super.initState();
+     super.initState();
     // _sc.addListener(() {
     //   print("pixel" + _sc.position.pixels.toString());
     //   print("position"+_sc.position.maxScrollExtent.toString());
@@ -58,7 +57,7 @@ class _PublicstoryState extends State<Publicstory> {
       finaldate = "${order.day}-${order.month}-${order.year}";
 
       print(finaldate);
-      isLoading = true;
+      _isLoading = true;
     });
     fetchdiary();
   }
@@ -68,7 +67,7 @@ class _PublicstoryState extends State<Publicstory> {
     return showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
+      firstDate: DateTime(1990),
       lastDate: DateTime(2030),
 
       builder: (BuildContext context, Widget child) {
@@ -234,23 +233,27 @@ class _PublicstoryState extends State<Publicstory> {
          :
     Padding(
       padding: const EdgeInsets.all(8.0),
-      child: MaterialButton(
-        height: 40,
-        color: Colors.red,
-        textColor: Colors.white,
-        padding: EdgeInsets.symmetric(vertical:10.0,horizontal: 2.0),
-        elevation: 10.0,
-        minWidth: MediaQuery.of(context).size.width/1.7,
-        onPressed: callDatePicker,
-        child: Text("Select Date",
+      child: Container(
+        margin: const EdgeInsets.only(top: 16),
+        alignment: Alignment.topCenter,
+        child: MaterialButton(
+          height: 40,
+          color: Colors.red,
+          textColor: Colors.white,
+          padding: EdgeInsets.symmetric(vertical:10.0,horizontal: 2.0),
+          elevation: 10.0,
+          minWidth: MediaQuery.of(context).size.width/1.7,
+          onPressed: callDatePicker,
+          child: Text("Select Date",
 
-          style: TextStyle(
-            fontSize: 20.0,
-            color: Colors.white,
+            style: TextStyle(
+              fontSize: 20.0,
+              color: Colors.white,
+            ),
           ),
-        ),
-        shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(30.0),
+          shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(30.0),
+          ),
         ),
       ),
     ),

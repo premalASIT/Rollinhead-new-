@@ -46,11 +46,11 @@ class _HomepageState extends State<Homepage> {
 
     onTap: (int index) => setState(() => _index = index),
     items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(icon: Icon(Icons.home,color: Colors.black,size: 40,), title: Text('',style: TextStyle(fontSize: 0),)),
-        BottomNavigationBarItem(icon: Icon(Icons.star_border,color: Colors.black,size: 40,), title: Text('',style: TextStyle(fontSize: 0),)),
-        BottomNavigationBarItem(icon: Icon(Icons.change_history,color: Colors.black,size: 40,), title: Text('',style: TextStyle(fontSize: 0),)),
-        BottomNavigationBarItem(icon: Icon(Icons.search,color: Colors.black,size: 40,), title: Text('',style: TextStyle(fontSize: 0),)),
-        BottomNavigationBarItem(icon: Icon(Icons.person,color: Colors.black,size: 40,), title: Text('',style: TextStyle(fontSize: 0),)),
+        BottomNavigationBarItem(icon: Icon(Icons.home,color: Colors.black,size: 30,), title: Text('',style: TextStyle(fontSize: 0),)),
+        BottomNavigationBarItem(icon: Icon(Icons.star_border,color: Colors.black,size: 30,), title: Text('',style: TextStyle(fontSize: 0),)),
+        BottomNavigationBarItem(icon: Icon(Icons.change_history,color: Colors.black,size: 30,), title: Text('',style: TextStyle(fontSize: 0),)),
+        BottomNavigationBarItem(icon: Icon(Icons.search,color: Colors.black,size: 30,), title: Text('',style: TextStyle(fontSize: 0),)),
+        BottomNavigationBarItem(icon: Icon(Icons.person,color: Colors.black,size: 30,), title: Text('',style: TextStyle(fontSize: 0),)),
     ],
     ),
 body: _children[_index],

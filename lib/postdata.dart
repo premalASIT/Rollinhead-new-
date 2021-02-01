@@ -91,7 +91,7 @@ class _PostDataState extends State<PostData> {
                   return null;
                 },
                 // maxLength: 200,
-                // maxLines: 10,
+                 maxLines: 10,
                 autofocus: false,
                 controller: msg,
                 //style: TextStyle(fontSize: 15.0, color: Color(0xFFbdc6cf)),
@@ -217,25 +217,56 @@ class _PostDataState extends State<PostData> {
           //   padding: new EdgeInsets.fromLTRB(8, 8, 8, 8),
           //
           // ),
-
-          FlatButton(
-            textColor: Colors.red,
-          //color: Colors.red,
-            child: Text(" Post",
-              style: TextStyle(
-              color: Colors.red,
-              fontSize: 22,
-            ),),
-            onPressed: (){
-              setState(() {
-                _isLoading = true;
-              });
-              // uploadImageMedia(img,msg.text,loc.text);
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => TagUserPosts(location: loc.text,message: msg.text, images: img,)
-              ));
-            },
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: 90,
+                  height: 45,
+                  child: RaisedButton(
+                    color: Colors.red,
+                    onPressed: (){
+                      setState(() {
+                        _isLoading = true;
+                      });
+                      // uploadImageMedia(img,msg.text,loc.text);
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) => TagUserPosts(location: loc.text,message: msg.text, images: img,)
+                      ));
+                    },
+                    child: Text(" Post",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                      ),),
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(15.0),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20,)
+            ],
           ),
+          // FlatButton(
+          //   textColor: Colors.red,
+          // //color: Colors.red,
+          //   child: Text(" Post",
+          //     style: TextStyle(
+          //     color: Colors.red,
+          //     fontSize: 22,
+          //   ),),
+          //   onPressed: (){
+          //     setState(() {
+          //       _isLoading = true;
+          //     });
+          //     // uploadImageMedia(img,msg.text,loc.text);
+          //     Navigator.of(context).push(MaterialPageRoute(
+          //         builder: (BuildContext context) => TagUserPosts(location: loc.text,message: msg.text, images: img,)
+          //     ));
+          //   },
+          // ),
         ],
       ),
     );

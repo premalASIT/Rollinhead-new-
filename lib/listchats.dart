@@ -56,7 +56,19 @@ class _ChatsListsState extends State<ChatsLists> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('People'),
+          backgroundColor: Colors.white,
+          title: Text('People',
+            style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold
+            ),),
+          leading: IconButton(
+            icon: Container(
+              padding: const EdgeInsets.all(10),
+              child: Icon(Icons.arrow_back, color:Colors.black, size: 24),
+            ),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
         ),
       body: _isLoading ? Center(child: CircularProgressIndicator()) :  SingleChildScrollView(
         child: Center(

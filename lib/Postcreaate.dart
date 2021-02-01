@@ -342,7 +342,13 @@ class _CreatePostsState extends State<CreatePosts> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Post'),
+        backgroundColor: Colors.white,
+        title: Text('Post',
+          style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold
+          ),
+        ),
       ),
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
@@ -375,7 +381,7 @@ class _CreatePostsState extends State<CreatePosts> {
                     return null;
                   },
                   // maxLength: 200,
-                  // maxLines: 10,
+                  maxLines: 7,
                   autofocus: false,
                   controller: msg,
                   //style: TextStyle(fontSize: 15.0, color: Color(0xFFbdc6cf)),
@@ -462,12 +468,10 @@ class _CreatePostsState extends State<CreatePosts> {
               child: RaisedButton(
                 color: Colors.red,
                 onPressed: () async {
-                  setState(() {
-                    _isLoading = true;
-                  });
-
                   if (_imageFile != null) {
-
+                    setState(() {
+                      _isLoading = true;
+                    });
 //  ByteData bytes1 = await rootBundle.load(ImgPath);
 //                  final tempDir = await getTemporaryDirectory();
 //                  final file = await new File('${tempDir.path}/imageexam.jpg').create();
@@ -489,6 +493,7 @@ class _CreatePostsState extends State<CreatePosts> {
                     uploadVideoMedia(_video,msg.text,loc.text);
                   }
                   else{
+
                     Fluttertoast.showToast(
                         msg:"Pick the image or video",
                         toastLength: Toast.LENGTH_LONG,
@@ -552,34 +557,78 @@ class _CreatePostsState extends State<CreatePosts> {
 //                 }
 //               }
 //             ),
-            SizedBox(height: 180,),
+            SizedBox(height: 165,),
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    FlatButton(
-                      textColor: Colors.red,
-                      //color: Colors.red,
-                      child: Text("Pick Image",
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 22,
-                        ),),
-                      onPressed: ()=> _showPicker(context),
-                      // captureImage(ImageSource.gallery),
+                    Expanded(
+                      flex: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          height: 45,
+                          child: RaisedButton(
+                            color: Colors.red,
+                            onPressed: ()=> _showPicker(context),
+                            child: Text("Pick Image",
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),),
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(15.0),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                    FlatButton(
-                      textColor: Colors.red,
-                      //color: Colors.red,
-                      child: Text("Pick Video",
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 22,
-                        ),),
-                      onPressed: ()=> _pickVideo(),
+                    // FlatButton(
+                    //   textColor: Colors.red,
+                    //   //color: Colors.red,
+                    //   child: Text("Pick Image",
+                    //     style: TextStyle(
+                    //       color: Colors.red,
+                    //       fontSize: 22,
+                    //     ),),
+                    //   onPressed: ()=> _showPicker(context),
+                    //   // captureImage(ImageSource.gallery),
+                    // ),
+                    Expanded(
+                      flex: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          height: 45,
+                          child: RaisedButton(
+                            color: Colors.red,
+                            onPressed: ()=> _pickVideo(),
+                            child: Text("Pick Video",
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),),
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(15.0),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
+                    // FlatButton(
+                    //   textColor: Colors.red,
+                    //   //color: Colors.red,
+                    //   child: Text("Pick Video",
+                    //     style: TextStyle(
+                    //       color: Colors.red,
+                    //       fontSize: 22,
+                    //     ),),
+                    //   onPressed: ()=> _pickVideo(),
+                    // ),
                   ],
                 ),
               ],

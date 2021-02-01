@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:rollinhead/DeleteCreatedPostPage.dart';
 import 'package:rollinhead/FollowersList.dart';
 import 'package:rollinhead/FollowingList.dart';
 import 'package:rollinhead/Model/GetProfiles/UserProfileApi.dart';
@@ -14,9 +15,6 @@ import 'package:rollinhead/settingPage.dart';
 import 'package:rollinhead/uploadpost.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(Profilepage());
-}
 class Profilepage extends StatefulWidget {
   @override
   _ProfilepageState createState() => _ProfilepageState();
@@ -31,10 +29,9 @@ class _ProfilepageState extends State<Profilepage> {
 
   @override
   void initState() {
-    super.initState();
     _isLoading=true;
     fetchUsersList();
-
+    super.initState();
   }
 
   Future<List<dynamic>> fetchUsersList() async {
@@ -129,103 +126,109 @@ class _ProfilepageState extends State<Profilepage> {
 
                 Row(
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(75),
+                    Expanded(
+                      flex: 2,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(75),
 
-                        child: Image.network(profile.response.profilePictureUrl,
-                          fit: BoxFit.fill,
-                          height: 150,
-                          width: 150,
+                          child: Image.network(profile.response.profilePictureUrl,
+                            fit: BoxFit.fill,
+                            height: 130,
+
+                          ),
+
                         ),
-
                       ),
                     ),
-                    Container(
-                      height: 130.0,
-                      width: 220.0,
-                      color: Colors.transparent,
+                    Expanded(
+                      flex: 3,
                       child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white12,
-                              borderRadius: BorderRadius.only(topRight: Radius.circular(70.0),
-                                bottomRight: Radius.circular(70.0),),
-                              border: Border.all(width: 3,color: Colors.black,style: BorderStyle.solid),
-                          ),
+                        padding: const EdgeInsets.all(8.0),
+                        height: 130.0,
+                        color: Colors.transparent,
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white12,
+                                borderRadius: BorderRadius.only(topRight: Radius.circular(70.0),topLeft: Radius.circular(-70.0),
+                                  bottomRight: Radius.circular(70.0),),
+                                border: Border.all(width: 3,color: Colors.black,style: BorderStyle.solid),
+                            ),
 
-                          child:Column(
-                            children: <Widget>[
-                               Row(
-                                 children: <Widget>[
-                                   Padding(
-                                     padding: const EdgeInsets.only(left:18.0,top:18.0,),
-                                     child: new Text("Posts",
-                                        style: TextStyle(color: Colors.black, fontSize: 18),
+                            child:Column(
+                              children: <Widget>[
+                                 Row(
+                                   children: <Widget>[
+                                     Padding(
+                                       padding: const EdgeInsets.only(left:18.0,top:18.0,),
+                                       child: new Text("Posts",
+                                          style: TextStyle(color: Colors.black, fontSize: 18),
+
+                                          ),
+                                     ),
+                                     Padding(
+                                       padding: const EdgeInsets.only(left:11.0,top:18.0,),
+                                       child: Text(profile.response.postsCount.toString(),
+                                         style: TextStyle(color: Colors.black, fontSize: 18,
+                                         fontWeight: FontWeight.bold,
+                                         ),),
+                                     ),
+                                   ],
+                                 ),
+                                Row(
+                                  children: <Widget>[
+                                    GestureDetector(
+                                      onTap: (){
+                                        Navigator.of(context).push(MaterialPageRoute(
+                                           builder: (BuildContext context) => FollowersPage()));
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left:18.0,top:8.0,),
+                                        child: new Text("Followers",
+                                          style: TextStyle(color: Colors.black, fontSize: 18),
 
                                         ),
-                                   ),
-                                   Padding(
-                                     padding: const EdgeInsets.only(left:11.0,top:18.0,),
-                                     child: Text(profile.response.postsCount.toString(),
-                                       style: TextStyle(color: Colors.black, fontSize: 18,
-                                       fontWeight: FontWeight.bold,
-                                       ),),
-                                   ),
-                                 ],
-                               ),
-                              Row(
-                                children: <Widget>[
-                                  GestureDetector(
-                                    onTap: (){
-                                      Navigator.of(context).push(MaterialPageRoute(
-                                         builder: (BuildContext context) => FollowersPage()));
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left:18.0,top:8.0,),
-                                      child: new Text("Followers",
-                                        style: TextStyle(color: Colors.black, fontSize: 18),
-
                                       ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left:11.0,top:8.0,),
-                                    child: Text(profile.response.followersCount.toString(),
-                                      style: TextStyle(color: Colors.black, fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  GestureDetector(
-                                    onTap: (){
-                                      Navigator.of(context).push(MaterialPageRoute(
-                                          builder: (BuildContext context) => FollowingPage()));
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left:18.0,top:8.0,),
-                                      child: new Text("Following",
-                                        style: TextStyle(color: Colors.black, fontSize: 18),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left:11.0,top:8.0,),
+                                      child: Text(profile.response.followersCount.toString(),
+                                        style: TextStyle(color: Colors.black, fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    GestureDetector(
+                                      onTap: (){
+                                        Navigator.of(context).push(MaterialPageRoute(
+                                            builder: (BuildContext context) => FollowingPage()));
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left:18.0,top:8.0,),
+                                        child: new Text("Following",
+                                          style: TextStyle(color: Colors.black, fontSize: 18),
 
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left:11.0,top:8.0,),
-                                    child: Text(profile.response.followingsCount.toString(),
-                                      style: TextStyle(color: Colors.black, fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),),
-                                  ),
-                                ],
-                              ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left:11.0,top:8.0,),
+                                      child: Text(profile.response.followingsCount.toString(),
+                                        style: TextStyle(color: Colors.black, fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),),
+                                    ),
+                                  ],
+                                ),
 
-                            ],
-                          ),
-                          ),
+                              ],
+                            ),
+                            ),
+                      ),
                     ),
                   ],
                 ),
@@ -329,7 +332,15 @@ class _ProfilepageState extends State<Profilepage> {
                   mainAxisSpacing: 2.0,
                   ),
                   itemBuilder: (BuildContext context, int index) {
-                    return Image.network(viewprofile.response[index].imagePath);
+                    return InkWell(
+                      onTap: (){
+                      //  Navigator.of(context).push(new MaterialPageRoute(builder: (context) => MyDialog(storyId: allPostApi.getStoriesNew[index].storyId))).whenComplete(initState);
+                        Navigator.of(context).push(new MaterialPageRoute(
+                            builder: (context) =>
+                                DeleteCreatedPostPage(userPostId: viewprofile.response[index].userPostId,imagePath: viewprofile.response[index].imagePath,videoPath: viewprofile.response[index].videoPath,))).whenComplete(initState);
+                      },
+                        child: Image.network(viewprofile.response[index].imagePath))
+                    ;
                   }
                 ),
               ],

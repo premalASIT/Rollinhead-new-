@@ -58,13 +58,20 @@ class _DisplayTreeUserStoryState extends State<DisplayTreeUserStory> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tree Story'),
-        // leading: BackButton(
-        //   onPressed: (){
-        //     Navigator.of(context).push(MaterialPageRoute(
-        //         builder: (BuildContext context) => Homepage()));
-        //   },
-        // ),
+        backgroundColor: Colors.white,
+        title: Text('Tree Story',
+          style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold
+          ),
+        ),
+        leading: IconButton(
+          icon: Container(
+            padding: const EdgeInsets.all(10),
+            child: Icon(Icons.arrow_back, color:Colors.black, size: 24),
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         actions: <Widget>[
 //           IconButton(
 //             icon: new Image.asset(
@@ -101,7 +108,7 @@ class _DisplayTreeUserStoryState extends State<DisplayTreeUserStory> {
 //             },
 //           ),
           IconButton(
-            icon:Icon(Icons.add),
+            icon:Icon(Icons.add,color: Colors.black,),
             tooltip: 'Tree',
             onPressed: () => {
               Navigator.of(context).push(MaterialPageRoute(

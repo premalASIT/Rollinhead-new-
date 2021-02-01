@@ -103,13 +103,19 @@ class _DisplayPollListOfUserStoryState extends State<DisplayPollListOfUserStory>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Poll List'),
-        // leading: BackButton(
-        //   onPressed: (){
-        //     Navigator.of(context).push(MaterialPageRoute(
-        //         builder: (BuildContext context) => Homepage()));
-        //   },
-        // ),
+        backgroundColor: Colors.white,
+        title: Text('Poll List',
+            style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold
+        ),),
+      leading: IconButton(
+        icon: Container(
+          padding: const EdgeInsets.all(10),
+          child: Icon(Icons.arrow_back, color:Colors.black, size: 24),
+        ),
+        onPressed: () => Navigator.of(context).pop(),
+      ),
         actions: <Widget>[
         ],
       ),

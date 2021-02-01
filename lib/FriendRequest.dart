@@ -61,8 +61,8 @@ class _FriendrequestState extends State<Friendrequest> {
         print(response.body);
         print("done2");
         print("done");
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => Homepage()));
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Homepage()),
+                (Route<dynamic> route) => false);
         Fluttertoast.showToast(
             msg: acceptreq.status.message,
             toastLength: Toast.LENGTH_LONG,
@@ -145,7 +145,13 @@ class _FriendrequestState extends State<Friendrequest> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Friend Request'),
+        backgroundColor: Colors.white,
+        title: Text('Friend Request',
+        style: TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.bold
+        ),
+        ),
       ),
       body:_isLoading ? Center(child: CircularProgressIndicator()) :
 

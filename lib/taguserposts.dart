@@ -57,8 +57,8 @@ class _TagUserPostsState extends State<TagUserPosts> {
         // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
         //     builder: (BuildContext context) => Homepage()), (
         //     Route<dynamic> route) => false);
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) =>Homepage() ));
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Homepage()),
+                (Route<dynamic> route) => false);
         print(value);
         return Future.value(value);
       });
@@ -223,14 +223,18 @@ class _TagUserPostsState extends State<TagUserPosts> {
                     uploadImageMedia(images,message,location);
                   }
                   else{
+                    setState(() {
+                      _isLoading = true;
+                    });
+                    uploadImageMedia(images,message,location);
                     Fluttertoast.showToast(
                         msg: "You hadn't tag anyone",
                         toastLength: Toast.LENGTH_LONG,
                         gravity: ToastGravity.BOTTOM,
                         timeInSecForIosWeb: 2
                     );
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => Homepage()));
+                    // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Homepage()),
+                    //         (Route<dynamic> route) => false);
                   }
                 }
             ),

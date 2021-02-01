@@ -43,25 +43,29 @@ class _Diarypaged1State extends State<Diarypaged1> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  InkWell(
-                    onTap: (){
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) => DiaryPageD2()));
-                    },
-                    child: Image.asset("assests/images/add-creativitty.png",
-                    height: 250,
-                      width: 200,
+                  Expanded(
+                    flex: 1,
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (BuildContext context) => DiaryPageD2()));
+                      },
+                      child: Image.asset("assests/images/add-creativitty.png",
+                      height: 250,
+                      ),
                     ),
                   ),
-                  InkWell(
-                    onTap: (){
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) => FriendStory()));
-                    },
-                    child: Image.asset("assests/images/youknow.png",
-                    height:250,
-                    width: 200,
-                  ),),
+                  Expanded(
+                    flex: 1,
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (BuildContext context) => FriendStory()));
+                      },
+                      child: Image.asset("assests/images/youknow.png",
+                      height:250,
+                    ),),
+                  ),
                 ],
               ),
               SizedBox(height: 30,),

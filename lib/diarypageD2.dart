@@ -13,13 +13,14 @@ class _DiaryPageD2State extends State<DiaryPageD2> {
       appBar: AppBar(
         backgroundColor: Colors.yellow,
         leading: Padding(
-          padding: const EdgeInsets.only(left:8.0),
+          padding: const EdgeInsets.only(left:8.0,top: 4,bottom: 4),
           child: ClipRRect(
 
-            borderRadius: BorderRadius.circular(160),
+            borderRadius: BorderRadius.circular(40),
             child: Image.asset("assests/images/1.jpg",
-              height: 35,
-              width: 35,
+              height: 80,
+              width: 80,
+              fit: BoxFit.fill,
             ),
           ),
         ),
@@ -37,16 +38,20 @@ class _DiaryPageD2State extends State<DiaryPageD2> {
         color: Colors.yellow,
         child: Center(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              InkWell(
-                onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => Diarypage()));
-                },
-                child: Image.asset("assests/images/everyday.png",
-                height: 200,
-                  width: 200,
+              Padding(
+                padding: const EdgeInsets.only(left:36),
+                child: InkWell(
+                  onTap: (){
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (BuildContext context) => Diarypage()));
+                  },
+                  child: Image.asset("assests/images/everyday.png",
+                  height: 200,
+                    width: 200,
+                  ),
                 ),
               ),
 
