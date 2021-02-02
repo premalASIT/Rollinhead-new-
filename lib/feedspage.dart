@@ -8,6 +8,7 @@ import 'package:rollinhead/DisplayTreeUserstory.dart';
 import 'package:rollinhead/Displaystory.dart';
 import 'package:rollinhead/Model/FeedHome/UserFeedApi.dart';
 import 'package:rollinhead/Model/GetProfiles/UserProfileApi.dart';
+import 'package:rollinhead/Model/ReportAPost/ReportAPostApi.dart';
 import 'package:rollinhead/Model/dislikepost/DisLikesPost.dart';
 import 'package:rollinhead/Model/likepost/LikepostsApi.dart';
 import 'package:rollinhead/Model/postasstory/StoryAsPostApi.dart';
@@ -36,6 +37,8 @@ class _FeedPageState extends State<FeedPage> {
   DisLikesPost dislikesapi;
   StoryAsPostApi story;
   UserProfileApi profile;
+  ReportAPostApi reportAPostApi;
+
   Likes(String pid) async {
 //    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 //    String userId =sharedPreferences.getString('user_Id');
@@ -164,6 +167,59 @@ class _FeedPageState extends State<FeedPage> {
       print(response.body);
     }
   }
+
+  reportPostFetch(String id) async {
+//    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+//    String userId =sharedPreferences.getString('user_Id');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userid = prefs.getString('user_Id');
+
+    Map data = {
+      'userId': userid,
+      'postId': id,
+    };
+    var response = await http.post(
+        "http://rolinhead.dolphinfiresafety.com/registration/reportPost",
+        body: data);
+    reportAPostApi = ReportAPostApi.fromJsonMap(json.decode(response.body.toString()));
+    if (response.statusCode == 200) {
+      if (reportAPostApi.status.code == 200) {
+        // setState(() {
+        //   _isLoading = false;
+        // });
+        //   sharedPreferences.setInt("user_Id",verifyotp.response.userId);
+        print(response.body);
+        print("done2");
+        print("done");
+
+        setState(() {
+          _isLoading = true;
+        });
+        fetchGetpost();
+        Fluttertoast.showToast(
+            msg: reportAPostApi.status.message,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 2);
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        Fluttertoast.showToast(
+            msg: reportAPostApi.status.message,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 2);
+        print(response.body);
+      }
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+      print(response.body);
+    }
+  }
+
 
   Pshare(String id) async {
 //    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -297,6 +353,70 @@ class _FeedPageState extends State<FeedPage> {
           ],
         ));
   }
+
+  Widget reportStory(String pid) {
+    return Container(
+        height: 130.0, // Change as per your requirement
+        width: 150.0, // Change as per your requirement
+        child: Column(
+          children: [
+            SizedBox(
+              height: 10,
+            ),
+            Text("Are you sure you want to Report a Post ?"),
+            SizedBox(
+              height: 26,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                MaterialButton(
+                  height: 50,
+                  color: Colors.red,
+                  child: Text("Yes",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0,
+                      )),
+                  elevation: 10.0,
+                  minWidth: MediaQuery.of(context).size.width / 4,
+                  onPressed: () {
+                    setState(() {
+                      _isLoading=true;
+                    });
+                    reportPostFetch(pid);
+                    Navigator.of(context).pop();
+                  },
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(15.0),
+                  ),
+                ),
+                MaterialButton(
+                  height: 50,
+                  color: Colors.red,
+                  child: Text("No",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0,
+                      )),
+                  elevation: 10.0,
+                  minWidth: MediaQuery.of(context).size.width / 4,
+                  onPressed: () {
+                    // CreateG(detail.text);
+                    Navigator.of(context).pop();
+                  },
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(15.0),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ));
+  }
+
   Widget gettag(int inx) {
     return Container(
         height: 170.0, // Change as per your requirement
@@ -431,68 +551,90 @@ class _FeedPageState extends State<FeedPage> {
                               Userprofile(uid :viewprofile.response[index].userId.toString())));
                     },
                     child: Row(
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(160),
-                          child: viewprofile.response[index]
-                              .userProfilePicture !=
-                              null
-                              ? Image.network(
-                            viewprofile
-                                .response[index].userProfilePicture,
-                            height: 45,
-                            width: 45,
-                          )
-                              : Image.asset(
-                            "assests/images/1.jpg",
-                            height: 45,
-                            width: 45,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Column(
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceEvenly,
+                        Row(
                           children: [
-                            viewprofile.response[index].userName != null
-                                ? Text(
-                              viewprofile.response[index].userName,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
-                                : Text(
-                              "UserName",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(25),
+                              child: viewprofile.response[index]
+                                  .userProfilePicture !=
+                                  null
+                                  ? Image.network(
+                                viewprofile
+                                    .response[index].userProfilePicture,
+                                fit: BoxFit.fill,
+                                height: 45,
+                                width: 45,
+                              )
+                                  : Image.asset(
+                                "assests/images/1.jpg",
+                                height: 45,
+                                width: 45,
                               ),
                             ),
-                            viewprofile.response[index].location != ""
-                                ? Text(
-                              viewprofile.response[index].location,
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Container(
+                              child: Column(
 
-                              style: TextStyle(
-                                fontSize: 14.5,
-                                color: Colors.black54,
-                              ),
-                            )
-                                : Text(
-                              "Location",
-                              style: TextStyle(
-                                fontSize: 14.5,
-                                color: Colors.black54,
+                                children: [
+                                  viewprofile.response[index].userName != null
+                                      ? Text(
+                                    viewprofile.response[index].userName,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
+                                      : Text(
+                                    "UserName",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  viewprofile.response[index].location != ""
+                                      ? Text(
+                                    viewprofile.response[index].location,
+
+                                    style: TextStyle(
+                                      fontSize: 14.5,
+                                      color: Colors.black54,
+                                    ),
+                                  )
+                                      : Text(
+                                    "Location",
+                                    style: TextStyle(
+                                      fontSize: 14.5,
+                                      color: Colors.black54,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(width:117),
-                        FlatButton.icon(onPressed: null, icon: Icon(Icons.info,color: Colors.red, size: 35,  ),
-                            label:  Text("",style: TextStyle(fontSize: 0),)),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Container(
+                          child: FlatButton.icon(onPressed: (){
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Report a Post'),
+                                    content: reportStory(viewprofile
+                                        .response[index].userPostId),
+                                  );
+                                });
+                          }, icon: Icon(Icons.info,color: Colors.red, size: 35,  ),
+                              label:  Text("",style: TextStyle(fontSize: 0),)),
+                        ),
+                      //  SizedBox(width:117),
+
                       ],
                     ),
                   ),

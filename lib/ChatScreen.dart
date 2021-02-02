@@ -120,7 +120,7 @@ class _MyChatState extends State<MyChatScreen> {
     DateTime time = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd hh:mm').format(time);
 
-    return new Scaffold(
+    return _isLoading ? Center(child: CircularProgressIndicator()) :Scaffold(
         appBar:
         AppBar(
           backgroundColor: Colors.red,
@@ -156,7 +156,7 @@ class _MyChatState extends State<MyChatScreen> {
 
           ],
     ),
-        body:_isLoading ? Center(child: CircularProgressIndicator()) :  new Container(
+        body:  new Container(
             width: double.infinity,
             height: double.infinity,
             color: Colors.white,

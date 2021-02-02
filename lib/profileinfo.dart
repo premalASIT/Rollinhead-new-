@@ -389,17 +389,18 @@ class _ProfileinfoState extends State<Profileinfo> {
         ),
         ),
       ),
-      body: Column(
+      body: _isLoading ? Center(child: CircularProgressIndicator()) : Column(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(160),
+              borderRadius: BorderRadius.circular(75),
 
               child: profile.response.profilePictureUrl != null ?
               Image.network(profile.response.profilePictureUrl,
                 height: 150,
                 width: 150,
+                fit: BoxFit.fill,
               ):
               Image.asset("assests/images/1.jpg",
                 height: 150,

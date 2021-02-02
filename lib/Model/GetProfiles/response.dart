@@ -18,6 +18,7 @@ class Response {
   final bool isBlocked;
   final bool isMuted;
   final bool isOwnProfile;
+  final bool isPublic;
   final int postsCount;
   final int followersCount;
 
@@ -39,6 +40,7 @@ class Response {
 		isBlocked = map["isBlocked"],
 		isMuted = map["isMuted"],
 		isOwnProfile = map["isOwnProfile"],
+		isPublic = map["isPublic"],
 		postsCount = map["postsCount"],
 		followersCount = map["followersCount"],
 		personalityType = map["personalityType"],
@@ -63,6 +65,7 @@ class Response {
 		data['isBlocked'] = isBlocked;
 		data['isMuted'] = isMuted;
 		data['isOwnProfile'] = isOwnProfile;
+		data['isPublic'] = isPublic;
 		data['postsCount'] = postsCount;
 		data['bio'] = bio;
 		data['personalityType'] = personalityType;

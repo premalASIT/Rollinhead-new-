@@ -149,7 +149,7 @@ class _displaystoryState extends State<displaystory> {
       ),
       body:_isLoading
           ? Center(child: CircularProgressIndicator())
-          : GridView.builder(
+          :story.response.length > 0 ? GridView.builder(
         padding: EdgeInsets.only(top: 15,
         left: 5,right: 5,bottom: 5),
         itemCount: story.response.length,
@@ -230,7 +230,13 @@ class _displaystoryState extends State<displaystory> {
             ),
           );
       }
-      ),
+      ):
+      Center(
+        child:Text("No Story Available",
+          style:
+          TextStyle(color: Colors.black, fontSize: 16,fontWeight: FontWeight.bold),
+        ),
+      )
     );
   }
 }
